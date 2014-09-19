@@ -38,7 +38,7 @@ namespace Dotflow
 		public void SpawnDot()
 		{
 			//picks random location
-			Vector2 spawnPos = new Vector2(Random.Range(-400, 400), Random.Range(-250, 250));
+			Vector2 spawnPos = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
 
 			//picks random prefab
 			int randy = Mathf.RoundToInt(Random.Range (0, dotPrefabs.Length));
@@ -115,7 +115,7 @@ namespace Dotflow
 			Vector3 raycastMousePos = Input.mousePosition;
 			raycastMousePos.x = Mathf.Clamp01(raycastMousePos.x / Screen.width);
 			raycastMousePos.y = Mathf.Clamp01(raycastMousePos.y / Screen.height);
-			raycastMousePos.z = -1f;
+			raycastMousePos.z = 0f;
 			
 			//gets mouse position to draw the line
 			Vector3 linedrawMousePos = new Vector3();
@@ -138,9 +138,10 @@ namespace Dotflow
 			//adds new dot to the end of the line
 			if (lineBeingDrawn) 
 			{
-				RaycastHit[] hits = Physics.RaycastAll(Camera.main.ViewportToWorldPoint(raycastMousePos), Vector3.forward, 300f);
-				
-				foreach(RaycastHit h in hits)
+				RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ViewportToWorldPoint(raycastMousePos), Vector3.forward, 300f);
+				//Debug.DrawRay(Camera.main.ViewportToWorldPoint(raycastMousePos), Vector3.forward,Color.red,60.0f,true);
+
+				foreach(RaycastHit2D h in hits)
 				{
 					if(h.collider.gameObject.layer == 9)
 					{

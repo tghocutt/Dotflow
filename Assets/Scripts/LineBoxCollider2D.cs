@@ -16,7 +16,7 @@ namespace Dotflow{
 		void Start () {
 			boxCollider = this.gameObject.GetComponent<BoxCollider2D> ();
 			//transform.localScale *= 10;
-			transform.localScale = new Vector3(15,15,15);
+			transform.localScale = new Vector3(1,1,1); //this 15 constant is a patch up due to NGUI, its also just a random number that seems to work fine
 		}
 		
 		// Update is called once per frame

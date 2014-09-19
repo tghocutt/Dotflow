@@ -5,7 +5,6 @@ namespace Dotflow
 {
 	public class Dot : MonoBehaviour {
 
-		public UIButton dot;
 		public Rigidbody2D rigidBody;
 		public bool clickedOrDetected;
 		public DotManager dotManager;
