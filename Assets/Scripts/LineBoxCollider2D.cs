@@ -3,20 +3,20 @@ using System.Collections;
 
 namespace Dotflow{
 	public class LineBoxCollider2D : MonoBehaviour {
-
+		[HideInInspector]
 		public BoxCollider2D boxCollider;
+		public SpriteRenderer spriteRenderer;
 
 		void OnTriggerEnter2D(Collider2D other){
 			Dot tempDot = other.gameObject.GetComponent<Dot> ();
-//			Debug.Log ("Line collided with: " + tempDot.color + "  " + tempDot.GetInstanceID());
 			tempDot.dotManager.CollisionWithLine (tempDot);
 		}
 
 		// Use this for initialization
 		void Start () {
-			boxCollider = this.gameObject.GetComponent<BoxCollider2D> ();
-			//transform.localScale *= 10;
-			transform.localScale = new Vector3(1,1,1); //this 15 constant is a patch up due to NGUI, its also just a random number that seems to work fine
+			boxCollider = GetComponent<BoxCollider2D> ();
+			spriteRenderer = GetComponent<SpriteRenderer> ();
+			//transform.localScale = new Vector3(1,1,1);
 		}
 		
 		// Update is called once per frame

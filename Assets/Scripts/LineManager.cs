@@ -15,6 +15,8 @@ namespace Dotflow {
 
 		// Use this for initialization
 		void Start () {
+			Debug.Log (new Vector3(3,4,0) - new Vector3(2,2,0));
+
 			lineRenderer = this.GetComponent<LineRenderer>();
 			listOfColliders = new List<LineBoxCollider2D>();
 		
@@ -29,7 +31,7 @@ namespace Dotflow {
 			return lineRenderer;
 		}
 
-		public void updateColliders (List<Transform>vertexList)
+		public void updateColliders (List<Transform>vertexList, float lineWidth, Color lineColor)
 		{
 			List<Transform> copyVertexList = new List<Transform> ();
 			copyVertexList.AddRange (vertexList);
@@ -50,18 +52,21 @@ namespace Dotflow {
 					direction.z = 0; //this prevents 3D rotating, aka Z axis rotation
 
 					//Debug.Log(direction.magnitude.ToString());
-					//copyVertexList[i].right = direction.normalized; //points the vertix at that direction
+					copyVertexList[i].right = direction.normalized; //points the vertix at that direction
 
-					listOfColliders[i].transform.position = copyVertexList[i].position;
+					listOfColliders[i].transform.position = copyVertexList[i].position + (direction / 2);			//copyVertexList[i].transform.position + (new Vector3(1,1,0) * direction.magnitude / 2);
 					listOfColliders[i].transform.right = direction.normalized;
 
-					Debug.Log(listOfColliders[i].transform.localScale.ToString() + " --- " + listOfColliders[i].transform.lossyScale.ToString());
+					//Debug.Log(listOfColliders[i].transform.localScale.ToString() + " --- " + listOfColliders[i].transform.lossyScale.ToString());
 
-					listOfColliders[i].boxCollider.center = Vector3.right * direction.magnitude * 150;
-					listOfColliders[i].boxCollider.size = new Vector3(direction.magnitude * 300, 15, 1);
+					//listOfColliders[i].boxCollider.center = Vector3.right * direction.magnitude / 2;
+					listOfColliders[i].transform.localScale = new Vector3(direction.magnitude, lineWidth, 1);
+					listOfColliders[i].GetComponent<SpriteRenderer>().color = lineColor;
+					listOfColliders[i].spriteRenderer.enabled = true;
 
 				} else {
 					listOfColliders[i].boxCollider.enabled = false;
+					listOfColliders[i].spriteRenderer.enabled = false;
 				}
 
 				copyVertexList.Remove (mouseFollower.transform);

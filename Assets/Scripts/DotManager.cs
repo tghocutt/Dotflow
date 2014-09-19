@@ -17,7 +17,8 @@ namespace Dotflow
 		public float dotShrinkAmount; /* how much the dots shrink, to adjust the difficulty */
 
 		public LineManager lineManager; /* lineManager is the game object that holds the line renderer, and has the script that keeps the collision boxes up to date */
-		public LineRenderer lineRenderer; /* the Renderer component for the lines */
+		//public LineRenderer lineRenderer; /* the Renderer component for the lines */
+		public float lineWidth = 4; /* the thickness, or width, for the line */
 
 		public GameObject dotContainer; /* the parent for all the dots, a simple container for them */
 		public GameObject[] dotPrefabs; /* array of all dot prefabs */
@@ -31,14 +32,14 @@ namespace Dotflow
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private string lineColor = ""; /* the current color of the line, with "" meaning no color, or no line at all */
+		private Color lineColor = Color.clear; /* the current color of the line, with "" meaning no color, or no line at all */
 		private int livesCount = 0; /* tracks the number of accidental line collisions the player has made */
 
 		//spawn dot instantiates a new random dot from prefab array(manuall assignment)
 		public void SpawnDot()
 		{
 			//picks random location
-			Vector2 spawnPos = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
+			Vector2 spawnPos = new Vector2(Random.Range(-main.screenSize.x, main.screenSize.x), Random.Range(-main.screenSize.y, main.screenSize.y));
 
 			//picks random prefab
 			int randy = Mathf.RoundToInt(Random.Range (0, dotPrefabs.Length));
@@ -95,7 +96,6 @@ namespace Dotflow
 				}
 			}
 			ClearLine ();
-
 			IncreaseDifficulty ();
 		}
 
@@ -103,14 +103,12 @@ namespace Dotflow
 		void ClearLine(){
 			listOfLineVertices.Clear();
 			dotsInLine.Clear();
-			lineColor = "";
+			lineColor = Color.clear;
 		}
 
 		//draw line draws a line between all of the dots in the line, using the dot locations as vertices
 		private IEnumerator DrawLine()
 		{
-			lineRenderer.SetVertexCount(listOfLineVertices.Count + 1);
-
 			//gets mouse position to draw the raycast
 			Vector3 raycastMousePos = Input.mousePosition;
 			raycastMousePos.x = Mathf.Clamp01(raycastMousePos.x / Screen.width);
@@ -124,22 +122,14 @@ namespace Dotflow
 			linedrawMousePos.z = 1.0f;
 
 			//sets line vertex locations
-			for(int i = 0; i < listOfLineVertices.Count; i++)
-			{
-				listOfLineVertices[i].position = new Vector3(listOfLineVertices[i].position.x, listOfLineVertices[i].position.y, 1.0f);
-				lineRenderer.SetPosition(i, listOfLineVertices[i].position);
+			for (int i = 0; i < listOfLineVertices.Count; i++) {
+				listOfLineVertices [i].position = new Vector3 (listOfLineVertices [i].position.x, listOfLineVertices [i].position.y, 0.0f);
 			}
 
-			//draws the line
-			lineRenderer.SetPosition(listOfLineVertices.Count, Camera.main.ViewportToWorldPoint(linedrawMousePos));
-			if(dotsInLine.Count > 0) 
-				lineRenderer.renderer.material.color = dotsInLine[0].GetComponentInChildren<UIButton>().defaultColor;
-
 			//adds new dot to the end of the line
-			if (lineBeingDrawn) 
+			if (lineBeingDrawn)
 			{
 				RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ViewportToWorldPoint(raycastMousePos), Vector3.forward, 300f);
-				//Debug.DrawRay(Camera.main.ViewportToWorldPoint(raycastMousePos), Vector3.forward,Color.red,60.0f,true);
 
 				foreach(RaycastHit2D h in hits)
 				{
@@ -147,7 +137,7 @@ namespace Dotflow
 					{
 						if(!dotsInLine.Contains(h.collider.GetComponentInParent<Dot>()))
 						{
-							if (lineColor == "" || lineColor == h.collider.GetComponentInParent<Dot>().color)
+							if (lineColor == Color.clear || lineColor == h.collider.GetComponentInParent<Dot>().color)
 							{
 								Dot newDot = h.collider.GetComponentInParent<Dot>();
 								lineColor = h.collider.GetComponentInParent<Dot>().color;
@@ -166,7 +156,7 @@ namespace Dotflow
 					
 				}
 			}
-			lineManager.updateColliders (listOfLineVertices);
+			lineManager.updateColliders (listOfLineVertices, lineWidth, lineColor);
 
 			yield return null;
 		}
@@ -194,7 +184,7 @@ namespace Dotflow
 			}
 
 			StartCoroutine (DrawLine ());
-			lineManager.updateColliders (listOfLineVertices);
+			lineManager.updateColliders (listOfLineVertices,lineWidth, lineColor);
 		}
 
 		public void CollisionWithLine (Dot collidedDot)
@@ -220,7 +210,7 @@ namespace Dotflow
 		//adds listener to UI elements
 		private void Start()
 		{
-			//lineRenderer = lineManager.GetLineRenderer();
+
 		}
 	}
 }
