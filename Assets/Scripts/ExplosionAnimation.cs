@@ -14,7 +14,7 @@ public class ExplosionAnimation : MonoBehaviour {
 		while(index < frames.Length)
 		{
 			gameObject.renderer.material = frames[index];
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.03f);
 			index++;
 		}
 

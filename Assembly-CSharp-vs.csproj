@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Menu Scripts\Lives.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\SettingsMenu.cs" />
+     <Compile Include="Assets\Scripts\Test\MagnitudeTest.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
