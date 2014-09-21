@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: b6c89cba938a1e14dae7a06fb184c958
 TextureImporter:
+<<<<<<< HEAD
+=======
+  fileIDToRecycleName: {}
+>>>>>>> iago-programming
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

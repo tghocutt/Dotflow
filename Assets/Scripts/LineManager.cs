@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Dotflow {
 	[RequireComponent (typeof(LineRenderer))]
-	[RequireComponent (typeof(Collider2D))]
 
 	public class LineManager : MonoBehaviour {
 
@@ -30,7 +29,7 @@ namespace Dotflow {
 			return lineRenderer;
 		}
 
-		public void updateColliders (List<Transform>vertexList)
+		public void updateColliders (List<Transform>vertexList, float lineWidth, Color lineColor)
 		{
 			List<Transform> copyVertexList = new List<Transform> ();
 			copyVertexList.AddRange (vertexList);
@@ -49,21 +48,25 @@ namespace Dotflow {
 				if (i < copyVertexList.Count-1) {
 					listOfColliders[i].boxCollider.enabled = true;
 
-					Vector3 direction = (copyVertexList[i].position - copyVertexList[i+1].position) * 15; //calculates direction based on this vertex position's and the next
-					direction.z = 0;
-					//copyVertexList[i].right = direction.normalized; //points the vertix at that direction
+					Vector3 direction = (copyVertexList[i+1].position - copyVertexList[i].position); //calculates direction based on this vertex position's and the next
+					direction.z = 0; //this prevents 3D rotating, aka Z axis rotation
 
-					listOfColliders[i].transform.position = copyVertexList[i].position;
+					//Debug.Log(direction.magnitude.ToString());
+					copyVertexList[i].right = direction.normalized; //points the vertix at that direction
+
+					listOfColliders[i].transform.position = copyVertexList[i].position + (direction / 2);			//copyVertexList[i].transform.position + (new Vector3(1,1,0) * direction.magnitude / 2);
 					listOfColliders[i].transform.right = direction.normalized;
 
-					//listOfColliders[i].transform.localScale = copyVertexList[i].localScale * 15; //makes the box scale proportional to the dot scale; this times 15 thing is a patch up due to NGUI; its also just a random number that seems to work
-					listOfColliders[i].transform.localScale = new Vector3(15,15,15);
-					
-					listOfColliders[i].boxCollider.center = -Vector3.right * direction.magnitude / 2;
-					listOfColliders[i].boxCollider.size = new Vector3(direction.magnitude, 1, 1);
+					//Debug.Log(listOfColliders[i].transform.localScale.ToString() + " --- " + listOfColliders[i].transform.lossyScale.ToString());
+
+					//listOfColliders[i].boxCollider.center = Vector3.right * direction.magnitude / 2;
+					listOfColliders[i].transform.localScale = new Vector3(direction.magnitude, lineWidth, 1);
+					listOfColliders[i].GetComponent<SpriteRenderer>().color = lineColor;
+					listOfColliders[i].spriteRenderer.enabled = true;
 
 				} else {
 					listOfColliders[i].boxCollider.enabled = false;
+					listOfColliders[i].spriteRenderer.enabled = false;
 				}
 			}
 		}

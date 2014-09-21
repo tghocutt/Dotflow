@@ -9,10 +9,9 @@ namespace Dotflow
 		
 		public float colThickness = 4f;
 		public float zPosition = 0f;
-		
-		private Vector2 screenSize;
-		
-		
+
+		[HideInInspector]
+		public Vector2 screenSize;		
 		
 		void Start ()
 		{

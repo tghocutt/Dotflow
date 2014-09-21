@@ -5,12 +5,13 @@ namespace Dotflow
 {
 	public class Dot : MonoBehaviour {
 
-		public UIButton dot;
 		public Rigidbody2D rigidBody;
 		public bool clickedOrDetected;
 		public DotManager dotManager;
 		public int id;
-		public string color;
+
+		[HideInInspector]
+		public Color color;
 
 
 
@@ -21,6 +22,8 @@ namespace Dotflow
 
 
 		private void Start () {
+
+			color = GetComponent<SpriteRenderer>().color;
 
 			gameObject.transform.rotation = new Quaternion(0f, 0f, Random.Range(0.0f, 360.0f), 0f);
 
