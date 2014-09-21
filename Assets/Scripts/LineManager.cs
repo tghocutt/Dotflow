@@ -15,8 +15,6 @@ namespace Dotflow {
 
 		// Use this for initialization
 		void Start () {
-			Debug.Log (new Vector3(3,4,0) - new Vector3(2,2,0));
-
 			lineRenderer = this.GetComponent<LineRenderer>();
 			listOfColliders = new List<LineBoxCollider2D>();
 		
@@ -35,6 +33,7 @@ namespace Dotflow {
 		{
 			List<Transform> copyVertexList = new List<Transform> ();
 			copyVertexList.AddRange (vertexList);
+
 			/*
 			while (listOfColliders.Count < copyVertexList.Count-1) { //while there's less colliders than lines
 				LineBoxCollider2D newBox = Instantiate(lineBoxColliderPrefab) as LineBoxCollider2D; //creates a new collider, disables it
@@ -42,7 +41,8 @@ namespace Dotflow {
 				listOfColliders.Add(newBox); //and stores it in the list
 			}
 			*/
-			copyVertexList.Add (mouseFollower.transform);
+
+			copyVertexList.Add(mouseFollower.transform);
 
 			for (int i = 0; i < listOfColliders.Count; i++) {
 				if (i < copyVertexList.Count-1) {
@@ -68,8 +68,6 @@ namespace Dotflow {
 					listOfColliders[i].boxCollider.enabled = false;
 					listOfColliders[i].spriteRenderer.enabled = false;
 				}
-
-				copyVertexList.Remove (mouseFollower.transform);
 			}
 		}
 		

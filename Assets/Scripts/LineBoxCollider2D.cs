@@ -16,7 +16,6 @@ namespace Dotflow{
 		void Start () {
 			boxCollider = GetComponent<BoxCollider2D> ();
 			spriteRenderer = GetComponent<SpriteRenderer> ();
-			//transform.localScale = new Vector3(1,1,1);
 		}
 		
 		// Update is called once per frame
