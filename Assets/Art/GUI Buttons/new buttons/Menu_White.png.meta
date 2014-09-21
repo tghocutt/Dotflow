@@ -2,9 +2,12 @@ fileFormatVersion: 2
 guid: 2dce17a21edbd3c4c8f042eb1a5ed0e0
 TextureImporter:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   fileIDToRecycleName: {}
 >>>>>>> iago-programming
+=======
+>>>>>>> Ben_Sound
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -21,18 +24,24 @@ TextureImporter:
     heightScale: .25
     normalMapFilter: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: 5
 =======
+=======
+>>>>>>> Ben_Sound
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
+<<<<<<< HEAD
 >>>>>>> iago-programming
+=======
+>>>>>>> Ben_Sound
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
@@ -50,10 +59,14 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
 <<<<<<< HEAD
+<<<<<<< HEAD
   alphaIsTransparency: 0
 =======
   alphaIsTransparency: 1
 >>>>>>> iago-programming
+=======
+  alphaIsTransparency: 1
+>>>>>>> Ben_Sound
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
