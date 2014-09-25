@@ -46,8 +46,6 @@ namespace Dotflow {
 
 			for (int i = 0; i < listOfColliders.Count; i++) {
 				if (i < copyVertexList.Count-1) {
-					listOfColliders[i].boxCollider.enabled = true;
-
 					Vector3 direction = (copyVertexList[i+1].position - copyVertexList[i].position); //calculates direction based on this vertex position's and the next
 					direction.z = 0; //this prevents 3D rotating, aka Z axis rotation
 
@@ -62,8 +60,9 @@ namespace Dotflow {
 					//listOfColliders[i].boxCollider.center = Vector3.right * direction.magnitude / 2;
 					listOfColliders[i].transform.localScale = new Vector3(direction.magnitude, lineWidth, 1);
 					listOfColliders[i].GetComponent<SpriteRenderer>().color = lineColor;
-					listOfColliders[i].spriteRenderer.enabled = true;
 
+					listOfColliders[i].spriteRenderer.enabled = true;
+					listOfColliders[i].boxCollider.enabled = true;
 				} else {
 					listOfColliders[i].boxCollider.enabled = false;
 					listOfColliders[i].spriteRenderer.enabled = false;

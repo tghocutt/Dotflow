@@ -26,6 +26,7 @@ namespace Dotflow
 
 		//lives manager(to let the player know how dead they are)
 		public Lives lives;
+		public bool guiActive = false;
 
 		private bool paused = false;
 		private bool muted = false;
@@ -37,9 +38,11 @@ namespace Dotflow
 			{
 				Time.timeScale = 0f;
 				paused = !paused;
+				guiActive = true;
 			} else {
 				Time.timeScale = 1f;
 				paused = !paused;
+				guiActive = false;
 			}
 		}
 
@@ -63,9 +66,12 @@ namespace Dotflow
 		{
 			mainMenuRoot.SetActive (true);
 			Time.timeScale = 0f;
+			guiActive = true;
 		}
 
-
+		public void startLives(int numberOfLives) {
+			lives.startLives (numberOfLives);
+		}
 
 		private void Start()
 		{
@@ -73,8 +79,6 @@ namespace Dotflow
 			UIEventListener.Get (menuButton.gameObject).onClick += OpenMenu;
 			UIEventListener.Get (pauseButton.gameObject).onClick += PauseGame;
 			UIEventListener.Get (muteButton.gameObject).onClick += MuteGame;
-
-
 		}
 	}
 }
