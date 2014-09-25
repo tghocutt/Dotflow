@@ -7,14 +7,21 @@ namespace Dotflow
 	public class DotManager : MonoBehaviour {
 
 		public GUIManager guiManager;
-		public int maxLives;
 
-		public int maxDots; /* maximum amount of dots allowed on screen, works as a difficulty adjust */
-		public int dotCount; /* current ammount of dots on screen */
+		public int startingLives = 3;
+		public int maxLives = 5;
 
-		public float dotMaxSpeed; /* maximum speed a dot can achieve */
-		public float dotSpeedBoostAmount; /* speed boost to dots's max speed, to adjust the difficulty */
-		public float dotShrinkAmount; /* how much the dots shrink, to adjust the difficulty */
+		/* difficulty ramp variables */
+		public int numberOfLevels = 5; /* how many shrinkings the game does before it stops doing so */
+		public float speedDifficultyThreshold = 1000f; /* speed that the dots must achieve in order for a shrinking to occur */
+		public float dotShrinkAmount = 0.2f; /* how much the dots shrink when the great shrinking happens*/
+
+		public int maxDots = 4; /* maximum amount of dots allowed on screen, works as a difficulty adjust */
+		public int dotCount = 0; /* current ammount of dots on screen */
+
+		public float dotCurrentSpeed = 100f; /* current speed of the dots, increases during the game, up until the threshold above */
+		public float dotSlowestSpeed = 100f; /* base top speed that all dots start on, aka the slowest speed */
+		public float dotSpeedBoostAmount = 0.1f; /* how much speed each boost gives to the dots */
 
 		public LineManager lineManager; /* lineManager is the game object that holds the line renderer, and has the script that keeps the collision boxes up to date */
 		//public LineRenderer lineRenderer; /* the Renderer component for the lines */
@@ -29,6 +36,7 @@ namespace Dotflow
 		public List<Dot> dotsInLine = new List<Dot> (); /* list containing all dot objects currently forming the line, in order of connection */
 		public List<Transform> listOfLineVertices = new List<Transform>(); /* list that holds all the vertices's positions */
 
+		[HideInInspector]
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
@@ -50,8 +58,8 @@ namespace Dotflow
 			dotObject.transform.localScale = new Vector3 (spawnSize, spawnSize, spawnSize);
 
 			//sets random speed vector based on max speed
-			float randyX = Random.Range(0, dotMaxSpeed);
-			float randyY = dotMaxSpeed - randyX;
+			float randyX = Random.Range(0, dotCurrentSpeed);
+			float randyY = dotCurrentSpeed - randyX;
 
 			//applies all those parameters to the new dot
 			Vector2 randomVector = new Vector2(randyX, randyY);
@@ -70,7 +78,7 @@ namespace Dotflow
 			//increases game complexity
 			maxDots++;
 			spawnSize = spawnSize/(1f + dotShrinkAmount);
-			dotMaxSpeed = dotMaxSpeed * ((1f + dotSpeedBoostAmount));
+			dotCurrentSpeed = dotCurrentSpeed * ((1f + dotSpeedBoostAmount));
 			foreach(Dot d in allDots)
 			{
 				if(d != null) d.gameObject.transform.localScale = new Vector3(spawnSize, spawnSize, spawnSize);
