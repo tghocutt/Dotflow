@@ -4,7 +4,9 @@ using System.Collections;
 namespace Dotflow
 {
 	public class CreditsMenu : MonoBehaviour {
-		
+
+		public AudioManager audioManager;
+
 		public GUIManager guiManager;
 
 		public GameObject root;
@@ -15,6 +17,7 @@ namespace Dotflow
 
 		public void GoBack(GameObject go)
 		{
+			audioManager.ButtonClick ();
 			root.SetActive (false);
 			guiManager.mainMenuRoot.SetActive (true);
 		}

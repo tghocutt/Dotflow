@@ -5,6 +5,8 @@ namespace Dotflow
 {
 	public class GUIManager : MonoBehaviour {
 
+		public AudioManager audiomanager;
+
 		//HUD elements
 		public UIButton menuButton;
 		public UIButton pauseButton;
@@ -50,6 +52,7 @@ namespace Dotflow
 		//quits out of the running game
 		public void MuteGame(GameObject go)
 		{
+			audiomanager.ButtonClick ();
 			if (muted) 
 			{
 				audioListener.enabled = muted;
@@ -64,6 +67,8 @@ namespace Dotflow
 		//opens the menu
 		public void OpenMenu(GameObject go)
 		{
+			audiomanager.soundFX [1].Stop ();
+			audiomanager.menuFX [2].Play ();
 			mainMenuRoot.SetActive (true);
 			Time.timeScale = 0f;
 			guiActive = true;

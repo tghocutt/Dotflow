@@ -178,9 +178,9 @@ namespace Dotflow
 								listOfLineVertices.Add(newDot.transform);
 								if(dotsInLine.Count < audioManager.dotsConnecting.Length)
 								{
-									audioManager.dotsConnecting[dotsInLine.Count - 1].Play();
+									//audioManager.dotsConnecting[dotsInLine.Count - 1].Play();
 								} else {
-									audioManager.dotsConnecting[audioManager.dotsConnecting.Length - 1].Play();
+									//audioManager.dotsConnecting[audioManager.dotsConnecting.Length - 1].Play();
 								}
 							}
 						}

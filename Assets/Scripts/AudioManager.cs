@@ -13,6 +13,11 @@ public class AudioManager : MonoBehaviour {
 		soundFX[0].Play();
 	}
 
+	public void ButtonClick()
+	{
+		menuFX [0].Play ();
+	}
+
 
 	private void Start()
 	{
