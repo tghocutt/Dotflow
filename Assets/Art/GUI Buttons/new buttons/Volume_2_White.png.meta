@@ -1,13 +1,8 @@
 fileFormatVersion: 2
 guid: f0cba200db462f249af9b2a1249ab15c
 TextureImporter:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  fileIDToRecycleName: {}
->>>>>>> iago-programming
-=======
->>>>>>> Ben_Sound
+  fileIDToRecycleName:
+    21300000: Volume_2_White
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -23,31 +18,17 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-<<<<<<< HEAD
-<<<<<<< HEAD
-  isReadable: 1
-  grayScaleToAlpha: 0
-  generateCubemap: 0
-  seamlessCubemap: 0
-  textureFormat: 5
-=======
-=======
->>>>>>> Ben_Sound
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
-<<<<<<< HEAD
->>>>>>> iago-programming
-=======
->>>>>>> Ben_Sound
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -58,17 +39,13 @@ TextureImporter:
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-<<<<<<< HEAD
-<<<<<<< HEAD
-  alphaIsTransparency: 0
-=======
   alphaIsTransparency: 1
->>>>>>> iago-programming
-=======
-  alphaIsTransparency: 1
->>>>>>> Ben_Sound
   textureType: 8
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
   spriteSheet:
     sprites: []
   spritePackingTag: 

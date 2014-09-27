@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour {
 	public AudioSource[] soundFX = new AudioSource[0];
 	public AudioSource[] dotsConnecting = new AudioSource[0];
 	public AudioSource[] music = new AudioSource[0];
-
+	public AudioSource[] menuFX = new AudioSource[0];
 
 	public void Pop()
 	{
