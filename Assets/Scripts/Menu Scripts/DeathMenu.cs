@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DeathMenu : MonoBehaviour {
 
+	public AudioManager audioManager;
+
 	public GameObject root;
 
 	public UIButton restartButton;
@@ -11,6 +13,7 @@ public class DeathMenu : MonoBehaviour {
 
 	public void RestartGame(GameObject go)
 	{
+		audioManager.ButtonClick ();
 		root.SetActive(false);
 		Application.LoadLevel("Main");
 	}
@@ -18,6 +21,7 @@ public class DeathMenu : MonoBehaviour {
 
 	public void ExitGame(GameObject go)
 	{
+		audioManager.ButtonClick ();
 		root.SetActive(false);
 		Application.Quit();
 	}

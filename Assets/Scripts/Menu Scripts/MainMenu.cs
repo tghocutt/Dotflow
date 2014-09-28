@@ -4,7 +4,9 @@ using System.Collections;
 namespace Dotflow
 {
 	public class MainMenu : MonoBehaviour {
-		
+
+		public AudioManager audioManager;
+
 		public GUIManager guiManager;
 
 		public GameObject root;
@@ -18,6 +20,8 @@ namespace Dotflow
 		//resumes the game
 		public void ResumeGame(GameObject go)
 		{
+			guiManager.guiActive = false;
+			audioManager.menuFX[1].Play();
 			root.SetActive (false);
 			Time.timeScale = 1f;
 		}
@@ -25,6 +29,7 @@ namespace Dotflow
 		//opens settings menu
 		public void OpenSettings(GameObject go)
 		{
+			audioManager.ButtonClick ();
 			root.SetActive (false);
 			guiManager.settingsMenuRoot.SetActive (true);
 		}
@@ -32,6 +37,7 @@ namespace Dotflow
 		
 		public void OpenCredits(GameObject go)
 		{
+			audioManager.ButtonClick ();
 			root.SetActive (false);
 			guiManager.creditsMenuRoot.SetActive (true);
 		}
@@ -40,6 +46,7 @@ namespace Dotflow
 		//quits out of the running game
 		public void ExitGame(GameObject go)
 		{
+			audioManager.ButtonClick ();
 			Application.Quit ();
 		}
 
