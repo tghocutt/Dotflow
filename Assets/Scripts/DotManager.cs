@@ -13,6 +13,10 @@ namespace Dotflow
 		public LineManager lineManager; /* lineManager is the game object that holds the line renderer, and has the script that keeps the collision boxes up to date */
 		public GUIText debugText;
 
+
+		public int score;
+		public UILabel scoreLabel;
+
 		public int startingLives = 3;
 		public int maxLives = 5;
 		private int currentLives; /* tracks the number of accidental line collisions the player has made */
@@ -114,6 +118,10 @@ namespace Dotflow
 		private void DestroyDots(List<Dot> ds)
 		{
 			if (ds.Count >= 2) {
+
+				score += 10 * ds.Count * ds.Count;
+				scoreLabel.text = score.ToString();
+
 				explosionRenderer.DrawExplosions (ds, lineColor);
 				//loops through dots in line, destroys them, removes them from dotlist
 				foreach (Dot d in ds) {
@@ -228,9 +236,12 @@ namespace Dotflow
 
 				if(currentLives == 0)
 				{
+
 					audioManager.soundFX[2].Play();
-					Time.timeScale = 0.0f;
+					//Time.timeScale = 0.1f;
 					guiManager.deathMenuRoot.SetActive(true);
+					ClearLine();
+					guiManager.guiActive = true;
 				} else {
 					//guiManager.lives.lives[currentLives-1].SetActive(false);
 					audioManager.soundFX[2].Play();

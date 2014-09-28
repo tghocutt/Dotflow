@@ -37,9 +37,11 @@ namespace Dotflow {
 					Vector3 direction = (copyVertexList[i+1].position - copyVertexList[i].position); //calculates direction based on this vertex position's and the next
 					direction.z = 0; //this prevents 3D rotating, aka Z axis rotation
 
-					copyVertexList[i].right = direction.normalized; //points the vertex at that direction
+					//copyVertexList[i].right = direction.normalized; //points the vertex at that direction
 
 					listOfColliders[i].transform.position = copyVertexList[i].position + (direction / 2);
+					listOfColliders[i].transform.position = new Vector3(listOfColliders[i].transform.position.x, listOfColliders[i].transform.position.y, 1f);
+
 					listOfColliders[i].transform.right = direction.normalized;
 
 					listOfColliders[i].transform.localScale = new Vector3(direction.magnitude, lineWidth, 1);
