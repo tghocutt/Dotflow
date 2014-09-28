@@ -8,9 +8,10 @@ namespace Dotflow
 
 		public GUIManager guiManager;
 		public ExplosionRenderer explosionRenderer;
-		public Main main; /* instance of the Main script (you can find it on the scripts folder), not used anywhere yet */
+		public Main main; /* instance of the Main script (you can find it on the scripts folder), this is being used to figure out the screen size for the spawning */
 		public AudioManager audioManager; /* the object that holds all the audio and plays it */
 		public LineManager lineManager; /* lineManager is the game object that holds the line renderer, and has the script that keeps the collision boxes up to date */
+		public GUIText debugText;
 
 		public int startingLives = 3;
 		public int maxLives = 5;
@@ -21,10 +22,10 @@ namespace Dotflow
 		public float speedDifficultyThreshold = 105f; /* speed that the dots must achieve in order for a shrinking to occur */
 		public float dotShrinkAmount = 0.2f; /* how much the dots shrink when the great shrinking happens*/
 
-		public int maxAmountDots = 25;
-		public int currentMaxDots; /* maximum amount of dots allowed on screen, works as a difficulty adjust */
+		public int maxAmountDots = 25; /* the absolute maximum amout of dots allowed on the screen, works as a cap for difficulty, to prevent overwhelming */
+		public int currentMaxDots; /* maximum amount of dots allowed on screen right now, works as a difficulty adjust */
 		public int dotCount; /* current ammount of dots on screen */
-		public int startingAmountDots = 4;
+		public int startingAmountDots = 4; /* how many dots should start on the screen */
 
 		public float dotCurrentSpeed = 100f; /* current speed of the dots, increases during the game, up until the threshold above */
 		public float dotSlowestSpeed = 100f; /* base top speed that all dots start on, aka the slowest speed */
@@ -44,9 +45,9 @@ namespace Dotflow
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private Color lineColor = Color.clear; /* the current color of the line, with "" meaning no color, or no line at all */
+		private Color lineColor = Color.clear; /* the current color of the line, Color.clear meaning no line/no color */
 
-		//spawn dot instantiates a new random dot from prefab array(manuall assignment)
+		//spawn dot instantiates a new random dot from prefab array (manual assignment)
 		public IEnumerator SpawnDot()
 		{
 			//picks random location
@@ -70,9 +71,10 @@ namespace Dotflow
 			dotObject.rigidbody2D.AddForce(randomVector);
 			dotObject.GetComponent<Dot>().dotManager = this;
 
+
 			dotCount += 1;
 
-			yield return new WaitForSeconds (2f);
+			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns */
 		}
 
 
@@ -80,34 +82,32 @@ namespace Dotflow
 		public void IncreaseDifficulty()
 		{
 			if (dotCurrentSpeed >= speedDifficultyThreshold) { /* if speed threshold is reached, shrinking happens here */
-				StartCoroutine(startShrinking());
+				StartCoroutine(startShrinking()); /* the intention is to have this shrink the dots to make it harder, but turn down the other difficulty knobs */
 			}
 
-			//increases game complexity
-			if (currentMaxDots < maxAmountDots)
-				currentMaxDots++;
+			if (currentMaxDots < maxAmountDots) /* if the maximum dot cap hasn't been reached */
+				currentMaxDots++; /* increase the max amount of dots by 1 */
 
-			dotCurrentSpeed = dotCurrentSpeed + dotSpeedBoostAmount;
-			/*
-			foreach(Dot d in allDots)
-			{
-				if(d != null) d.gameObject.transform.localScale = new Vector3(spawnSize, spawnSize, spawnSize);
-			}*/
+			dotCurrentSpeed = dotCurrentSpeed + dotSpeedBoostAmount; /* increase the speed of all dots */
+
 		}
 	
+		/* coroutine that shrinks all dots, and takes care of the logic behind the shrinking */
 		IEnumerator startShrinking() {
-			Debug.Log ("shrinking");
+			Vector3 goalScale = allDots [0].transform.localScale * (1-dotShrinkAmount); //this line could be a problem if the shrinking happens at the same time as ALL dots on screen are destroyed, low probability but still could happen
 
-			Vector3 goalScale = allDots [0].transform.localScale * (1-dotShrinkAmount);
+			dotCurrentSpeed = dotSlowestSpeed; /* slows all dots that will spawn after the shrinking, doenst affect the dots that exist currently */
 
 			while (allDots[0].transform.localScale.x > goalScale.x) {
+				spawnSize -= (1-dotShrinkAmount) * Time.deltaTime;
+
 				foreach (Dot dot in allDots) {
 					dot.transform.localScale -= ((1-dotShrinkAmount) * new Vector3(1,1,0)) * Time.deltaTime;
 				}
-				spawnSize -= (1-dotShrinkAmount) * Time.deltaTime;
 
 				yield return new WaitForEndOfFrame();
 			}
+			Debug.Log("Scale: " + spawnSize.ToString() + " Variable for Speed: " + dotCurrentSpeed + " Dot Speed: " + allDots[0].rigidbody2D.velocity.magnitude);
 		}
 
 		//takes a list of dots, destroys and removes them from the dotlist, 
@@ -126,9 +126,9 @@ namespace Dotflow
 						}
 					}
 				}
-				ClearLine ();
 				IncreaseDifficulty ();
 			}
+			ClearLine ();
 		}
 
 
@@ -197,7 +197,8 @@ namespace Dotflow
 		//detects input, and tracks dot count, and starts coroutine
 		private void Update()
 		{
-			if (!guiManager.guiActive) {
+			if (!guiManager.guiActive) { /* stops in-game user input when the UI is active */
+
 				if (Input.GetMouseButtonDown (0)) {
 						lineBeingDrawn = true;
 						audioManager.soundFX [1].Play ();
@@ -215,6 +216,8 @@ namespace Dotflow
 
 				StartCoroutine (DrawLine ());
 				lineManager.updateColliders (listOfLineVertices, lineWidth, lineColor);
+
+				//debugText.text = allDots[0].rigidbody2D.velocity.ToString();
 			}
 		}
 
