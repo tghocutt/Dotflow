@@ -32,5 +32,8 @@ namespace Dotflow
 			id = this.GetInstanceID ();
 		}
 
+//		void Update () {
+//			Debug.Log (rigidbody2D.velocity.ToString());
+//		}
 	}
 }
