@@ -21,10 +21,10 @@ namespace Dotflow
 		public float speedDifficultyThreshold = 105f; /* speed that the dots must achieve in order for a shrinking to occur */
 		public float dotShrinkAmount = 0.2f; /* how much the dots shrink when the great shrinking happens*/
 
-		public int maxAmountDots = 25;
-		public int currentMaxDots; /* maximum amount of dots allowed on screen, works as a difficulty adjust */
+		public int maxAmountDots = 25; /* the absolute maximum amout of dots allowed on the screen, works as a cap for difficulty, to prevent overwhelming */
+		public int currentMaxDots; /* maximum amount of dots allowed on screen right now, works as a difficulty adjust */
 		public int dotCount; /* current ammount of dots on screen */
-		public int startingAmountDots = 4;
+		public int startingAmountDots = 4; /* how many dots should start on the screen */
 
 		public float dotCurrentSpeed = 100f; /* current speed of the dots, increases during the game, up until the threshold above */
 		public float dotSlowestSpeed = 100f; /* base top speed that all dots start on, aka the slowest speed */
@@ -44,9 +44,9 @@ namespace Dotflow
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private Color lineColor = Color.clear; /* the current color of the line, with "" meaning no color, or no line at all */
+		private Color lineColor = Color.clear; /* the current color of the line, Color.clear meaning no line/no color */
 
-		//spawn dot instantiates a new random dot from prefab array(manuall assignment)
+		//spawn dot instantiates a new random dot from prefab array (manual assignment)
 		public IEnumerator SpawnDot()
 		{
 			//picks random location
@@ -72,7 +72,7 @@ namespace Dotflow
 
 			dotCount += 1;
 
-			yield return new WaitForSeconds (2f);
+			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns */
 		}
 
 
@@ -95,19 +95,23 @@ namespace Dotflow
 			}*/
 		}
 	
+		/* coroutine that shrinks all dots, and takes care of the logic behind the shrinking */
 		IEnumerator startShrinking() {
-			Debug.Log ("shrinking");
-
-			Vector3 goalScale = allDots [0].transform.localScale * (1-dotShrinkAmount);
+			Vector3 goalScale = allDots [0].transform.localScale * (1-dotShrinkAmount); //this line could be a problem if the shrinking happens at the same time as ALL dots on screen are destroyed, low probability but still could happen
 
 			while (allDots[0].transform.localScale.x > goalScale.x) {
+				spawnSize -= (1-dotShrinkAmount) * Time.deltaTime;
+				dotCurrentSpeed -= (dotCurrentSpeed - dotSlowestSpeed) * Time.deltaTime;
+
 				foreach (Dot dot in allDots) {
 					dot.transform.localScale -= ((1-dotShrinkAmount) * new Vector3(1,1,0)) * Time.deltaTime;
+					dot.rigidbody2D.add
 				}
-				spawnSize -= (1-dotShrinkAmount) * Time.deltaTime;
+
 
 				yield return new WaitForEndOfFrame();
 			}
+			Debug.Log("Scale: " + spawnSize.ToString() + "Speed: " + dotCurrentSpeed);
 		}
 
 		//takes a list of dots, destroys and removes them from the dotlist, 
