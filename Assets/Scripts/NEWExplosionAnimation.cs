@@ -8,7 +8,7 @@ public class NEWExplosionAnimation : MonoBehaviour
 
 	void Start () 
 	{
-		animator.speed = 2f;
+		animator.speed = 1.8f;
 		StartCoroutine(WaitThenDoThings());
 	}
 

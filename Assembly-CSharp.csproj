@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Menu Scripts\FrontSettingsMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\Lives.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\Menu Scripts\ScoreReadout.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\MouseFollow.cs" />
      <Compile Include="Assets\Scripts\NEWExplosionAnimation.cs" />
