@@ -5,9 +5,19 @@ public class Lives : MonoBehaviour {
 
 	public GameObject[] lives;
 
-	public void startLives (int numberOfLives){
-		lives = new GameObject[numberOfLives];
+	public int maxLives;
+	public int currentLives;
 
-		//TODO: programatically add the sprites
+	public void SetLifeTotal(int total)
+	{
+		if (total >= 0 && total <= 5) 
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				lives[i].SetActive((i + 1) <= total);
+			}
+
+			currentLives = total;
+		}
 	}
 }

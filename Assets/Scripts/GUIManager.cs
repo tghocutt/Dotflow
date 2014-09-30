@@ -74,10 +74,6 @@ namespace Dotflow
 			guiActive = true;
 		}
 
-		public void startLives(int numberOfLives) {
-			lives.startLives (numberOfLives);
-		}
-
 		private void Start()
 		{
 			//HID Listeners

@@ -19,7 +19,8 @@ namespace Dotflow
 
 		public int startingLives = 3;
 		public int maxLives = 5;
-		private int currentLives; /* tracks the number of accidental line collisions the player has made */
+
+		public Lives livesClass;
 
 		/* difficulty ramp variables */
 		public int numberOfLevels = 5; /* how many shrinkings the game does before it stops doing so */
@@ -234,20 +235,19 @@ namespace Dotflow
 
 			if (dotsInLine.Count > 0 && collidedDot.color != lineColor){
 
-				if(currentLives == 0)
+				if(livesClass.currentLives == 0)
 				{
-
+					livesClass.SetLifeTotal(0);
 					audioManager.soundFX[2].Play();
 					//Time.timeScale = 0.1f;
 					guiManager.deathMenuRoot.SetActive(true);
 					ClearLine();
 					guiManager.guiActive = true;
 				} else {
-					//guiManager.lives.lives[currentLives-1].SetActive(false);
+					livesClass.SetLifeTotal(livesClass.currentLives - 1);
 					audioManager.soundFX[2].Play();
 					ClearLine();
 					lineBeingDrawn = false;
-					currentLives --;
 				}
 			}
 		}
@@ -255,9 +255,8 @@ namespace Dotflow
 		//adds listener to UI elements
 		private void Start()
 		{
-			currentLives = startingLives;
+			livesClass.SetLifeTotal (startingLives);
 			currentMaxDots = startingAmountDots;
-			guiManager.startLives (maxLives);
 		}
 	}
 }
