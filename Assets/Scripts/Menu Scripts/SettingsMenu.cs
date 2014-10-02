@@ -16,10 +16,12 @@ namespace Dotflow
 
 		public UISlider volumeSlider;
 
+		public SettingsKnobs settingsKnobs;
 
 
 		public void GoBack(GameObject go)
 		{
+			settingsKnobs.SetValues ();
 			audioManager.ButtonClick ();
 			root.SetActive (false);
 			guiManager.mainMenuRoot.SetActive (true);

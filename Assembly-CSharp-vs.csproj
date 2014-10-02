@@ -67,7 +67,7 @@
      <Compile Include="Assets\Scripts\MouseFollow.cs" />
      <Compile Include="Assets\Scripts\NEWExplosionAnimation.cs" />
      <Compile Include="Assets\Scripts\Test\BackgroundAnimator.cs" />
-     <Compile Include="Assets\Scripts\Test\MagnitudeTest.cs" />
+     <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
