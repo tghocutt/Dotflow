@@ -7,6 +7,8 @@ public class BackgroundAnimator : MonoBehaviour {
 	public float maxSize;
 	public float minSize;
 
+	public Color[] colors = new Color[0];
+
 
 	private IEnumerator Grow()
 	{
@@ -17,6 +19,22 @@ public class BackgroundAnimator : MonoBehaviour {
 		}
 
 		StartCoroutine (Shrink ());
+	}
+
+
+	private IEnumerator ShiftColor()
+	{
+		for(int i = 0; i < (colors.Length - 1); i++)
+		{
+			float num = 0f;
+			while(num < 1f)
+			{
+				gameObject.renderer.material.color = Color.Lerp(colors[i], colors[i + 1], num);
+				num += 0.1f;
+			}
+		}
+		yield return null;
+		StartCoroutine(ShiftColor());
 	}
 
 
@@ -34,6 +52,7 @@ public class BackgroundAnimator : MonoBehaviour {
 
 	private void Start () 
 	{
+		StartCoroutine (ShiftColor ());
 		StartCoroutine (Grow ());
 	}
 
