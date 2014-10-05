@@ -9,6 +9,7 @@ namespace Dotflow
 		public bool clickedOrDetected;
 		public DotManager dotManager;
 		public int id;
+		public bool isPowerup;
 
 		[HideInInspector]
 		public Color color;

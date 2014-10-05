@@ -13,7 +13,6 @@ namespace Dotflow
 		public LineManager lineManager; /* lineManager is the game object that holds the line renderer, and has the script that keeps the collision boxes up to date */
 		public GUIText debugText;
 
-
 		public int score;
 		public UILabel scoreLabel;
 
@@ -32,6 +31,8 @@ namespace Dotflow
 		public int dotCount; /* current ammount of dots on screen */
 		public int startingAmountDots = 4; /* how many dots should start on the screen */
 
+		public float chanceOfPowerupSpawn = 0.2f; /* percentual chance of a powerup spawning instead of a normal dot, from 0 to 1 */
+
 		public float dotCurrentSpeed = 100f; /* current speed of the dots, increases during the game, up until the threshold above */
 		public float dotSlowestSpeed = 100f; /* base top speed that all dots start on, aka the slowest speed */
 		public float dotSpeedBoostAmount = 1f; /* how much speed each boost gives to the dots */
@@ -41,6 +42,7 @@ namespace Dotflow
 
 		public GameObject dotContainer; /* the parent for all the dots, a simple container for them */
 		public GameObject[] dotPrefabs; /* array of all dot prefabs */
+		public PowerupController[] dotPowerupPrefabs;
 
 		public List<Dot> allDots = new List<Dot>(); /* list containing all dot objects that exist */
 		public List<Dot> dotsInLine = new List<Dot> (); /* list containing all dot objects currently forming the line, in order of connection */
@@ -50,7 +52,21 @@ namespace Dotflow
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private Color lineColor = Color.clear; /* the current color of the line, Color.clear meaning no line/no color */
+		public Color lineColor = Color.white; /* the current color of the line, Color.white meaning no line/no color */
+
+		private PowerupController pc;
+
+		public GameObject getRandomPowerup() {
+			float r = Random.Range (0f, 1f);
+			float csum = 0;
+			foreach (PowerupController p in dotPowerupPrefabs) {
+				csum += p.powerupChanceWeight;
+				if (r <= csum)
+					return p.gameObject;
+			}
+			Debug.Log ("Something wrong with the power ups, spawning the first power up instead");
+			return dotPowerupPrefabs [0].gameObject; //this should never happen
+		}
 
 		//spawn dot instantiates a new random dot from prefab array (manual assignment)
 		public IEnumerator SpawnDot()
@@ -58,9 +74,13 @@ namespace Dotflow
 			//picks random location
 			Vector2 spawnPos = new Vector2(Random.Range(-main.screenSize.x, main.screenSize.x), Random.Range(-main.screenSize.y, main.screenSize.y));
 
-			//picks random prefab
-			int randy = Mathf.RoundToInt(Random.Range (0, dotPrefabs.Length));
-			GameObject dotObject = Instantiate(dotPrefabs[randy]) as GameObject;
+			GameObject dotObject;
+			if (currentMaxDots > 4 && Random.Range(0f, 1f) <= chanceOfPowerupSpawn) { /* rolls the chance of a power up spawn */
+				dotObject = Instantiate (getRandomPowerup()) as GameObject;
+			} else {
+				int randy = Mathf.RoundToInt (Random.Range (0, dotPrefabs.Length));
+				dotObject = Instantiate (dotPrefabs [randy]) as GameObject;
+			}
 
 			//sets parent and scale
 			dotObject.transform.parent = dotContainer.transform;
@@ -75,7 +95,6 @@ namespace Dotflow
 			dotObject.transform.localPosition = spawnPos;
 			dotObject.rigidbody2D.AddForce(randomVector);
 			dotObject.GetComponent<Dot>().dotManager = this;
-
 
 			dotCount += 1;
 
@@ -144,7 +163,7 @@ namespace Dotflow
 		void ClearLine(){
 			listOfLineVertices.Clear();
 			dotsInLine.Clear();
-			lineColor = Color.clear;
+			lineColor = Color.white;
 		}
 
 		//draw line draws a line between all of the dots in the line, using the dot locations as vertices
@@ -178,13 +197,14 @@ namespace Dotflow
 					{
 						if(!dotsInLine.Contains(h.collider.GetComponentInParent<Dot>()))
 						{
-							if (lineColor == Color.clear || lineColor == h.collider.GetComponentInParent<Dot>().color)
+							Dot dot = h.collider.GetComponentInParent<Dot>();
+							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup)
 							{
-								Dot newDot = h.collider.GetComponentInParent<Dot>();
-								lineColor = h.collider.GetComponentInParent<Dot>().color;
+								if (!dot.isPowerup && lineColor == Color.white)
+									lineColor = dot.color;
 
-								dotsInLine.Add(newDot);
-								listOfLineVertices.Add(newDot.transform);
+								dotsInLine.Add(dot);
+								listOfLineVertices.Add(dot.transform);
 								if(dotsInLine.Count < audioManager.dotsConnecting.Length)
 								{
 									audioManager.dotsConnecting[dotsInLine.Count - 1].Play();
@@ -233,7 +253,7 @@ namespace Dotflow
 		public void CollisionWithLine (Dot collidedDot)
 		{
 
-			if (dotsInLine.Count > 0 && collidedDot.color != lineColor){
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && lineColor != Color.white){
 
 				if(livesClass.currentLives == 0)
 				{
