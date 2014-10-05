@@ -9,6 +9,10 @@ public class BackgroundAnimator : MonoBehaviour {
 
 	public Color[] colors = new Color[0];
 
+	private float desiredTime = 6f;
+	private float timeElapsed = 0f;
+	private int randy = 0;
+	private Color c;
 
 	private IEnumerator Grow()
 	{
@@ -22,19 +26,22 @@ public class BackgroundAnimator : MonoBehaviour {
 	}
 
 
-	private IEnumerator ShiftColor()
+	private void ShiftColor()
 	{
-		for(int i = 0; i < (colors.Length - 1); i++)
+		if (timeElapsed >= desiredTime) 
 		{
-			float num = 0f;
-			while(num < 1f)
-			{
-				gameObject.renderer.material.color = Color.Lerp(colors[i], colors[i + 1], num);
-				num += 0.1f;
-			}
+			c = gameObject.renderer.material.color;
+			timeElapsed = 0;
+			randy = Mathf.RoundToInt (Random.Range (0, colors.Length));
 		}
-		yield return null;
-		StartCoroutine(ShiftColor());
+
+		gameObject.renderer.material.color = Color.Lerp (c, colors [randy], (timeElapsed/desiredTime));
+		timeElapsed += Time.deltaTime;
+	}
+
+	private void Update()
+	{
+		ShiftColor ();
 	}
 
 
@@ -52,7 +59,8 @@ public class BackgroundAnimator : MonoBehaviour {
 
 	private void Start () 
 	{
-		StartCoroutine (ShiftColor ());
+		c = gameObject.renderer.material.color;
+		ShiftColor ();
 		StartCoroutine (Grow ());
 	}
 
