@@ -11,7 +11,7 @@ public class BackgroundAnimator : MonoBehaviour {
 
 	private float desiredTime = 6f;
 	private float timeElapsed = 0f;
-	private int randy = 0;
+	private int randy = 8;
 	private Color c;
 
 	private IEnumerator Grow()

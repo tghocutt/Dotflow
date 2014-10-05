@@ -77,9 +77,11 @@ namespace Dotflow
 			GameObject dotObject;
 			if (currentMaxDots > 4 && Random.Range(0f, 1f) <= chanceOfPowerupSpawn) { /* rolls the chance of a power up spawn */
 				dotObject = Instantiate (getRandomPowerup()) as GameObject;
+				dotObject.transform.rotation = Quaternion.identity;
 			} else {
 				int randy = Mathf.RoundToInt (Random.Range (0, dotPrefabs.Length));
 				dotObject = Instantiate (dotPrefabs [randy]) as GameObject;
+				dotObject.transform.rotation = Quaternion.identity;
 			}
 
 			//sets parent and scale
@@ -97,7 +99,7 @@ namespace Dotflow
 			dotObject.GetComponent<Dot>().dotManager = this;
 
 			dotCount += 1;
-
+			dotObject.transform.rotation = Quaternion.identity;
 			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns */
 		}
 
