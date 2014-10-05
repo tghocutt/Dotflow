@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: ac81f9d0958850743b82afb73e6eac81
+guid: d047cb858eb56c348ae9360ba282dd66
 TextureImporter:
   fileIDToRecycleName:
-    21300000: DotTexture
+    21300000: light_inside
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
