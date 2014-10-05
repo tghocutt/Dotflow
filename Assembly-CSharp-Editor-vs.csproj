@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{2DFDD7AC-E292-5B18-DFD2-95DA8774A53E}</ProjectGuid>
+	<ProjectGuid>{7D17DA22-DA36-1F25-554A-DF122C535212}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -140,6 +140,7 @@
      <None Include="Assets\Shared\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Shared\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
@@ -162,6 +163,9 @@
      <None Include="Assets\Shared\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\Shared\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Resources\Localization.txt" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>C:/Users/TSI25/Documents/Dotflow10-5-14/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -174,7 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-vs.csproj">
-      <Project>{9765FEF7-4CEF-AAD8-FCDE-3ED50DBDC400}</Project>      <Name>Assembly-CSharp-vs</Name>    </ProjectReference>
+      <Project>{D4E35F77-9B85-ADA6-A574-A6BE4FAFB5A7}</Project>      <Name>Assembly-CSharp-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

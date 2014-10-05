@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{9765FEF7-4CEF-AAD8-FCDE-3ED50DBDC400}</ProjectGuid>
+	<ProjectGuid>{D4E35F77-9B85-ADA6-A574-A6BE4FAFB5A7}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -213,6 +213,7 @@
      <None Include="Assets\Shared\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Shared\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
@@ -235,6 +236,9 @@
      <None Include="Assets\Shared\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\Shared\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Resources\Localization.txt" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>C:/Users/TSI25/Documents/Dotflow10-5-14/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
