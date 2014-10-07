@@ -11,7 +11,7 @@ public class BackgroundAnimator : MonoBehaviour {
 
 	private float desiredTime = 10f;
 	private float timeElapsed = 0f;
-	private int randy = 8;
+	private int randy = 0;
 	private Color c;
 
 	private IEnumerator Grow()
@@ -51,8 +51,7 @@ public class BackgroundAnimator : MonoBehaviour {
 		{
 			gameObject.transform.localScale *= (1 - (Time.deltaTime / 16));
 			yield return new WaitForEndOfFrame();
-		}
-		
+		}		
 		StartCoroutine (Grow ());
 	}
 

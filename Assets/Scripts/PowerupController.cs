@@ -10,8 +10,9 @@ namespace Dotflow
 		public Powerups typeofPowerup;
 		public float powerupChanceWeight; /* from 0 to 1, what's the % chance that this powerup shows up instead any other */
 
-
 		public PowerupManager powerupManager;
+
+		public int scoreMultDelayInSecs = 10;
 
 		private Dot dot;
 
@@ -47,7 +48,7 @@ namespace Dotflow
 		}
 
 		void PowerScoreMultiplier() {
-			Debug.Log ("Score!");
+			dot.dotManager.scoreMultiplierIncrease(scoreMultDelayInSecs);
 		}
 
 		void PowerExtraLife() 
@@ -70,7 +71,6 @@ namespace Dotflow
 			}
 
 		}
-
 
 		void PowerTimeFreeze() 
 		{
