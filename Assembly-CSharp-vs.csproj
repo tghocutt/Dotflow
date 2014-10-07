@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{D4E35F77-9B85-ADA6-A574-A6BE4FAFB5A7}</ProjectGuid>
+	<ProjectGuid>{2F39F3D6-D13F-8B14-5E43-B8D8A9828577}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\NEWExplosionAnimation.cs" />
      <Compile Include="Assets\Scripts\PowerupController.cs" />
      <Compile Include="Assets\Scripts\Test\BackgroundAnimator.cs" />
+     <Compile Include="Assets\Scripts\Test\Complement.cs" />
      <Compile Include="Assets\Scripts\Test\PowerupManager.cs" />
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
@@ -239,7 +240,7 @@
      <None Include="Assets\Shared\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Resources\Localization.txt" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/TSI25/Documents/Dotflow10-5-14/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/TSI25/Documents/Dotflow10-7-2014/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
