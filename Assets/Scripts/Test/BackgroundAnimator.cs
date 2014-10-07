@@ -9,7 +9,7 @@ public class BackgroundAnimator : MonoBehaviour {
 
 	public Color[] colors = new Color[0];
 
-	private float desiredTime = 6f;
+	private float desiredTime = 10f;
 	private float timeElapsed = 0f;
 	private int randy = 8;
 	private Color c;

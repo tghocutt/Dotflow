@@ -10,6 +10,11 @@ namespace Dotflow
 		public Powerups typeofPowerup;
 		public float powerupChanceWeight; /* from 0 to 1, what's the % chance that this powerup shows up instead any other */
 
+
+		public PowerupManager powerupManager;
+
+		private Dot dot;
+
 		public void ActivatePowerup() {
 			switch (typeofPowerup) 
 			{
@@ -35,23 +40,52 @@ namespace Dotflow
 			}
 		}
 
+
+		private void Start()
+		{
+			dot = gameObject.GetComponent<Dot> () as Dot;
+		}
+
 		void PowerScoreMultiplier() {
 			Debug.Log ("Score!");
 		}
 
-		void PowerExtraLife() {
-			Debug.Log ("Life!");
+		void PowerExtraLife() 
+		{
+			int lifeTotal = dot.dotManager.livesClass.currentLives;
+			if(lifeTotal < dot.dotManager.livesClass.maxLives)
+			{
+				dot.dotManager.livesClass.SetLifeTotal(lifeTotal + 1);
+			}
 		}
 
-		void PowerTimeSlow() {
-			Debug.Log ("Slow!");
+		void PowerTimeSlow() 
+		{
+			if (powerupManager.slowTimeIsRunning)
+			{
+				powerupManager.timePowerUp += 5;
+			} else
+			{
+				powerupManager.SlowTimeGo (0.4f);
+			}
+
 		}
 
-		void PowerTimeFreeze() {
-			Debug.Log ("Freeze!");
-		}
 
-		void OnDestroy() {
+		void PowerTimeFreeze() 
+		{
+			if (powerupManager.slowTimeIsRunning)
+			{
+				powerupManager.timePowerUp += 5;
+			} else
+			{
+				powerupManager.SlowTimeGo (0.01f);
+			}
+		}
+	
+
+		void OnDestroy() 
+		{
 			ActivatePowerup ();
 		}
 	}

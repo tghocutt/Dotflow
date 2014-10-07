@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\NEWExplosionAnimation.cs" />
      <Compile Include="Assets\Scripts\PowerupController.cs" />
      <Compile Include="Assets\Scripts\Test\BackgroundAnimator.cs" />
+     <Compile Include="Assets\Scripts\Test\PowerupManager.cs" />
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
