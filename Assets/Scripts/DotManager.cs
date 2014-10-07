@@ -15,6 +15,8 @@ namespace Dotflow
 		public PowerupManager powerupManager;
 
 		public int score;
+		private float scoreMultiplier = 1; /* for the score powerup */
+
 		public UILabel scoreLabel;
 
 		public int startingLives = 3;
@@ -65,8 +67,18 @@ namespace Dotflow
 				if (r <= csum)
 					return p.gameObject;
 			}
+
 			Debug.Log ("Something wrong with the power ups, spawning the first power up instead");
 			return dotPowerupPrefabs [0].gameObject; //this should never happen
+		}
+
+		public void scoreMultiplierIncrease(int delayInSecs) {
+			scoreMultiplier++;
+			Invoke ("scoreMultiplierDecrease", delayInSecs);
+		}
+
+		public void scoreMultiplierDecrease() {
+			scoreMultiplier--;
 		}
 
 		//spawn dot instantiates a new random dot from prefab array (manual assignment)
@@ -143,7 +155,7 @@ namespace Dotflow
 		{
 			if (ds.Count >= 2) {
 
-				score += 10 * ds.Count * ds.Count;
+				score += Mathf.RoundToInt(10f * (ds.Count*(ds.Count/2f)) * scoreMultiplier);
 				scoreLabel.text = score.ToString();
 
 				explosionRenderer.DrawExplosions (ds, lineColor);

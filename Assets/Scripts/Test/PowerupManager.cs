@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PowerupManager : MonoBehaviour {
 
+	public GameObject dotManager;
+
 	public float timePowerUp = 0f;
 	public bool slowTimeIsRunning = false;
 
