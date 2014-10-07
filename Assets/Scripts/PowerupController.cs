@@ -72,15 +72,15 @@ namespace Dotflow
 
 		}
 
-		void PowerTimeFreeze() 
+		void PowerTimeFreeze() /* not being used right now */
 		{
-			if (powerupManager.slowTimeIsRunning)
-			{
-				powerupManager.timePowerUp += 5;
-			} else
-			{
-				powerupManager.SlowTimeGo (0.01f);
-			}
+//			if (powerupManager.slowTimeIsRunning)
+//			{
+//				powerupManager.timePowerUp += 5;
+//			} else
+//			{
+//				powerupManager.SlowTimeGo (0.01f);
+//			}
 		}
 	
 
