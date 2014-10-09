@@ -10,6 +10,7 @@ namespace Dotflow
 		public DotManager dotManager;
 		public int id;
 		public bool isPowerup;
+		public UIAnchor anchor;
 
 		[HideInInspector]
 		public Color color;

@@ -6,6 +6,7 @@ namespace Dotflow
 {
 	public class DotManager : MonoBehaviour {
 
+		public ComplementManager complementManager;
 		public GUIManager guiManager;
 		public ExplosionRenderer explosionRenderer;
 		public Main main; /* instance of the Main script (you can find it on the scripts folder), this is being used to figure out the screen size for the spawning */
@@ -154,6 +155,20 @@ namespace Dotflow
 		private void DestroyDots(List<Dot> ds)
 		{
 			if (ds.Count >= 2) {
+				if(ds.Count >= 3 && ds.Count < 5)
+				{
+					//small complement
+					ds[ds.Count-1].GetComponentInChildren<SpawnComplement>().ComplementPlayer(complementManager.GenerateComplent(1));
+				} else if (ds.Count >= 5 && ds.Count < 7)
+				{
+					//medium complement
+					ds[ds.Count-1].GetComponentInChildren<SpawnComplement>().ComplementPlayer(complementManager.GenerateComplent(2));
+				} else if (ds.Count > 7)
+				{
+					//big complement
+					ds[ds.Count-1].GetComponentInChildren<SpawnComplement>().ComplementPlayer(complementManager.GenerateComplent(3));
+				}
+
 
 				score += Mathf.RoundToInt(10f * (ds.Count*(ds.Count/2f)) * scoreMultiplier);
 				scoreLabel.text = score.ToString();
