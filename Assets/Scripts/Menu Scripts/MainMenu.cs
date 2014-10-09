@@ -6,9 +6,7 @@ namespace Dotflow
 	public class MainMenu : MonoBehaviour {
 
 		public AudioManager audioManager;
-
 		public GUIManager guiManager;
-
 		public GameObject root;
 
 		public UIButton resumeButton;
@@ -16,8 +14,6 @@ namespace Dotflow
 		public UIButton creditsButton;
 		public UIButton quitButton;
 
-
-		//resumes the game
 		public void ResumeGame(GameObject go)
 		{
 			guiManager.guiActive = false;
@@ -26,14 +22,13 @@ namespace Dotflow
 			Time.timeScale = 1f;
 		}
 		
-		//opens settings menu
 		public void OpenSettings(GameObject go)
 		{
 			audioManager.ButtonClick ();
 			root.SetActive (false);
 			guiManager.settingsMenuRoot.SetActive (true);
+			guiManager.settingsMenuRoot.transform.parent.gameObject.GetComponent<SettingsMenu> ().GetFromPlayerPrefs ();
 		}
-		
 		
 		public void OpenCredits(GameObject go)
 		{
@@ -42,14 +37,13 @@ namespace Dotflow
 			guiManager.creditsMenuRoot.SetActive (true);
 		}
 
-
-		//quits out of the running game
 		public void ExitGame(GameObject go)
 		{
+			PlayerPrefs.Save ();
+
 			audioManager.ButtonClick ();
 			Application.Quit ();
 		}
-
 
 		private void Start()
 		{
