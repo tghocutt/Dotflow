@@ -27,6 +27,7 @@ namespace Dotflow
 
 		/* difficulty ramp variables */
 		public int numberOfLevels = 5; /* how many shrinkings the game does before it stops doing so */
+		public int currentLevel = 1; /*  */
 		public float speedDifficultyThreshold = 105f; /* speed that the dots must achieve in order for a shrinking to occur */
 		public float dotShrinkAmount = 0.2f; /* how much the dots shrink when the great shrinking happens*/
 
@@ -122,7 +123,8 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
-			if (dotCurrentSpeed >= speedDifficultyThreshold) { /* if speed threshold is reached, shrinking happens here */
+			if (dotCurrentSpeed >= speedDifficultyThreshold && currentLevel <= numberOfLevels) { /* if speed threshold is reached, shrinking happens here */
+				currentLevel++;
 				StartCoroutine(startShrinking()); /* the intention is to have this shrink the dots to make it harder, but turn down the other difficulty knobs */
 			}
 
@@ -288,6 +290,10 @@ namespace Dotflow
 
 				if(livesClass.currentLives == 0)
 				{
+					/* highscore setting */
+					if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
+					PlayerPrefs.Save();
+						
 					livesClass.SetLifeTotal(0);
 					audioManager.soundFX[2].Play();
 					//Time.timeScale = 0.1f;
@@ -306,6 +312,9 @@ namespace Dotflow
 		//adds listener to UI elements
 		private void Start()
 		{
+			if (!PlayerPrefs.HasKey ("highScore"))
+				PlayerPrefs.SetInt ("highScore", 0);
+
 			livesClass.SetLifeTotal (startingLives);
 			currentMaxDots = startingAmountDots;
 		}
