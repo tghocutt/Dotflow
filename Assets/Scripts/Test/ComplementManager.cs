@@ -8,7 +8,7 @@ namespace Dotflow
 		public GameObject[] complements1 = new GameObject[0];
 		public GameObject[] complements2 = new GameObject[0];
 		public GameObject[] complements3 = new GameObject[0];
-
+		public Camera uiCamera;
 		public DotManager dotManager;
 
 
@@ -36,6 +36,27 @@ namespace Dotflow
 			}
 
 			return go;
+		}
+
+
+		public void ComplementPlayer(GameObject prefab, Vector3 position)
+		{
+			Vector3 newPos = Camera.main.WorldToScreenPoint (position);
+
+			Vector3 anotherNewPos = uiCamera.ScreenToWorldPoint (newPos);
+
+			Debug.Log (newPos + "\n" + anotherNewPos);
+
+			GameObject go = NGUITools.AddChild(gameObject, prefab);
+
+			//go.transform.position = newPos;
+			StartCoroutine (Despawn());
+		}
+
+		private IEnumerator Despawn()
+		{
+			yield return new WaitForSeconds (10f);
+			Destroy (gameObject);
 		}
 	}
 }

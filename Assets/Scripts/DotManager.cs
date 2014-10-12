@@ -160,15 +160,15 @@ namespace Dotflow
 				if(ds.Count >= 3 && ds.Count < 5)
 				{
 					//small complement
-					ds[ds.Count-1].GetComponentInChildren<SpawnComplement>().ComplementPlayer(complementManager.GenerateComplent(1));
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(1), ds[ds.Count-1].transform.position);
 				} else if (ds.Count >= 5 && ds.Count < 7)
 				{
 					//medium complement
-					ds[ds.Count-1].GetComponentInChildren<SpawnComplement>().ComplementPlayer(complementManager.GenerateComplent(2));
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(2), ds[ds.Count-1].transform.position);
 				} else if (ds.Count > 7)
 				{
 					//big complement
-					ds[ds.Count-1].GetComponentInChildren<SpawnComplement>().ComplementPlayer(complementManager.GenerateComplent(3));
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(3), ds[ds.Count-1].transform.position);
 				}
 
 
