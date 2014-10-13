@@ -12,6 +12,8 @@ public class FrontMenu: MonoBehaviour {
 	public GameObject frontMenuRoot;
 	public GameObject creditsMenuRoot;
 	public GameObject optionsMenuRoot;
+	public GameObject background;
+	public GameObject[] loadingScreens = new GameObject[0];
 
 	//quits out of the running game
 	public void ExitGame(GameObject go)
@@ -31,18 +33,26 @@ public class FrontMenu: MonoBehaviour {
 	private void OpenSettings(GameObject go)
 	{
 		frontMenuRoot.SetActive (false);
+		background.SetActive (false);
 		optionsMenuRoot.SetActive (true);
 		optionsMenuRoot.transform.parent.gameObject.GetComponent<FrontSettingsMenu>().GetFromPlayerPrefs ();
 	}
 
 	private void PlayGameSurvival(GameObject go)
 	{
+		frontMenuRoot.SetActive (false);
+		background.SetActive (false);
+		int randy = Mathf.RoundToInt (Random.Range (0, loadingScreens.Length));
+		loadingScreens [randy].SetActive (true);
 		PlayerPrefs.SetInt ("ZenModeOn",0);
 		Application.LoadLevel (1);
 	}
 
 	private void PlayGameZen(GameObject go)
 	{
+		frontMenuRoot.SetActive (false);
+		int randy = Mathf.RoundToInt (Random.Range (0, loadingScreens.Length));
+		loadingScreens [randy].SetActive (true);
 		PlayerPrefs.SetInt ("ZenModeOn",1);
 		Application.LoadLevel (1);
 	}
