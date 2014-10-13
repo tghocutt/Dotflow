@@ -56,8 +56,11 @@ namespace Dotflow
 		[HideInInspector]
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
-		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
 		public Color lineColor = Color.white; /* the current color of the line, Color.white meaning no line/no color */
+
+		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
+		private int amountOfDotColors = 3; /* how many different dot colors are there currently in the game */
+		private int everyXlevelsAddColor = 2; /* adds a new color every X levels/shrinkings */
 
 		private PowerupController pc;
 
@@ -95,7 +98,7 @@ namespace Dotflow
 				dotObject.transform.rotation = Quaternion.identity;
 				dotObject.GetComponent<PowerupController>().powerupManager = powerupManager;
 			} else {
-				int randy = Mathf.RoundToInt (Random.Range (0, dotPrefabs.Length));
+				int randy = Mathf.RoundToInt (Random.Range (0, amountOfDotColors));
 				dotObject = Instantiate (dotPrefabs [randy]) as GameObject;
 				dotObject.transform.rotation = Quaternion.identity;
 			}
@@ -127,6 +130,9 @@ namespace Dotflow
 
 			if (dotCurrentSpeed >= speedDifficultyThreshold && currentLevel <= numberOfLevels) { /* if speed threshold is reached, shrinking happens here */
 				currentLevel++;
+				if (currentLevel % everyXlevelsAddColor == 0 && amountOfDotColors < dotPrefabs.Length) /* one new color every 2 levels, unless there are no more new colors to add */
+					amountOfDotColors++;
+
 				StartCoroutine(startShrinking()); /* the intention is to have this shrink the dots to make it harder, but turn down the other difficulty knobs */
 			}
 

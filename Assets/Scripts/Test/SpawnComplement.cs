@@ -3,14 +3,15 @@ using System.Collections;
 
 public class SpawnComplement : MonoBehaviour {
 
-	public void ComplementPlayer(GameObject prefab)
+	public void ComplementPlayer(GameObject prefab)//, Vector3 position)
 	{
-		GameObject go = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-		go.transform.parent = gameObject.transform;
-		go.transform.localScale = Vector3.one;
-		go.transform.position = Vector3.zero;
+		//Vector3 newpos = Camera.main.WorldToScreenPoint (position);
 
-		transform.parent = null;
+		//GameObject go = Instantiate(prefab, newpos, Quaternion.identity) as GameObject;
+		//go.transform.parent = gameObject.transform;
+
+		//gameObject.transform.position = newpos;
+
 		StartCoroutine (Despawn());
 	}
 
