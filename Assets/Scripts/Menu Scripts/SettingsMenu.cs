@@ -15,7 +15,7 @@ namespace Dotflow
 
 		public void GoBack(GameObject go)
 		{
-			settingsKnobs.SetValues ();
+			if(settingsKnobs.gameObject.activeSelf) settingsKnobs.SetValues ();
 			PlayerPrefs.SetFloat ("volume", volumeSlider.value);
 
 			audioManager.ButtonClick ();

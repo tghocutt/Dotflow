@@ -11,9 +11,16 @@ namespace Dotflow
 		public Camera uiCamera;
 		public DotManager dotManager;
 
+		private GameObject currentComplement;
+
 
 		public GameObject GenerateComplent(int weight)
 		{
+			if (currentComplement != null) 
+			{
+				Destroy(currentComplement);
+			}
+
 			int randy;
 			GameObject go;
 			if (weight > 3 || weight < 1) 
@@ -41,22 +48,24 @@ namespace Dotflow
 
 		public void ComplementPlayer(GameObject prefab, Vector3 position)
 		{
-			Vector3 newPos = Camera.main.WorldToScreenPoint (position);
+			Vector3 newPos = Camera.main.WorldToViewportPoint (position);
+			newPos = new Vector3 (newPos.x - 0.5f, newPos.y - 0.5f, newPos.z);
+			Vector3 newNewPos = new Vector3 (uiCamera.pixelWidth * newPos.x, uiCamera.pixelHeight * newPos.y, 0);
 
-			Vector3 anotherNewPos = uiCamera.ScreenToWorldPoint (newPos);
-
-			Debug.Log (newPos + "\n" + anotherNewPos);
+			Debug.Log (newPos + "\n" + newNewPos);
 
 			GameObject go = NGUITools.AddChild(gameObject, prefab);
 
-			//go.transform.position = newPos;
-			StartCoroutine (Despawn());
+			currentComplement = go;
+
+			go.transform.localPosition = newNewPos;
+			StartCoroutine (Despawn(go));
 		}
 
-		private IEnumerator Despawn()
+		private IEnumerator Despawn(GameObject go)
 		{
 			yield return new WaitForSeconds (10f);
-			Destroy (gameObject);
+			Destroy (go);
 		}
 	}
 }

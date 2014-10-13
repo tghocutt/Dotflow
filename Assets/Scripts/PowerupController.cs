@@ -67,6 +67,7 @@ namespace Dotflow
 				powerupManager.timePowerUp += 5;
 			} else
 			{
+				dot.dotManager.audioManager.soundFX[3].Play();
 				powerupManager.SlowTimeGo (0.4f);
 			}
 

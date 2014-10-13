@@ -42,8 +42,6 @@ namespace Dotflow{
 			dotManager.dotSpeedBoostAmount = int.Parse (speedBoostInput.label.text);
 			dotManager.currentMaxDots = int.Parse (maxDotsInput.label.text);
 			dotManager.dotShrinkAmount = (float.Parse (shrinkAmountInput.label.text)) / 100f;
-
-
 		}
 
 

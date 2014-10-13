@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\Test\PowerupManager.cs" />
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Scripts\Test\SpawnComplement.cs" />
+     <Compile Include="Assets\Scripts\Test\TrackPicker.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
