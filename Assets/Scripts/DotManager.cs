@@ -126,9 +126,8 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
-			audioManager.soundFX [4].Play ();
-
 			if (dotCurrentSpeed >= speedDifficultyThreshold && currentLevel <= numberOfLevels) { /* if speed threshold is reached, shrinking happens here */
+				audioManager.soundFX [4].Play ();
 				currentLevel++;
 				if (currentLevel % everyXlevelsAddColor == 0 && amountOfDotColors < dotPrefabs.Length) /* one new color every 2 levels, unless there are no more new colors to add */
 					amountOfDotColors++;
