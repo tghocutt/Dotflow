@@ -6,15 +6,18 @@ namespace Dotflow
 {
 	public class DotManager : MonoBehaviour {
 
+		public ComplementManager complementManager;
 		public GUIManager guiManager;
 		public ExplosionRenderer explosionRenderer;
 		public Main main; /* instance of the Main script (you can find it on the scripts folder), this is being used to figure out the screen size for the spawning */
 		public AudioManager audioManager; /* the object that holds all the audio and plays it */
 		public LineManager lineManager; /* lineManager is the game object that holds the line renderer, and has the script that keeps the collision boxes up to date */
 		public GUIText debugText;
-
+		public PowerupManager powerupManager;
 
 		public int score;
+		private float scoreMultiplier = 1; /* for the score powerup */
+
 		public UILabel scoreLabel;
 
 		public int startingLives = 3;
@@ -24,6 +27,7 @@ namespace Dotflow
 
 		/* difficulty ramp variables */
 		public int numberOfLevels = 5; /* how many shrinkings the game does before it stops doing so */
+		public int currentLevel = 1; /*  */
 		public float speedDifficultyThreshold = 105f; /* speed that the dots must achieve in order for a shrinking to occur */
 		public float dotShrinkAmount = 0.2f; /* how much the dots shrink when the great shrinking happens*/
 
@@ -31,6 +35,8 @@ namespace Dotflow
 		public int currentMaxDots; /* maximum amount of dots allowed on screen right now, works as a difficulty adjust */
 		public int dotCount; /* current ammount of dots on screen */
 		public int startingAmountDots = 4; /* how many dots should start on the screen */
+
+		public float chanceOfPowerupSpawn = 0.2f; /* percentual chance of a powerup spawning instead of a normal dot, from 0 to 1 */
 
 		public float dotCurrentSpeed = 100f; /* current speed of the dots, increases during the game, up until the threshold above */
 		public float dotSlowestSpeed = 100f; /* base top speed that all dots start on, aka the slowest speed */
@@ -41,6 +47,7 @@ namespace Dotflow
 
 		public GameObject dotContainer; /* the parent for all the dots, a simple container for them */
 		public GameObject[] dotPrefabs; /* array of all dot prefabs */
+		public PowerupController[] dotPowerupPrefabs;
 
 		public List<Dot> allDots = new List<Dot>(); /* list containing all dot objects that exist */
 		public List<Dot> dotsInLine = new List<Dot> (); /* list containing all dot objects currently forming the line, in order of connection */
@@ -49,8 +56,35 @@ namespace Dotflow
 		[HideInInspector]
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
 
+		public Color lineColor = Color.white; /* the current color of the line, Color.white meaning no line/no color */
+
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private Color lineColor = Color.clear; /* the current color of the line, Color.clear meaning no line/no color */
+		private int amountOfDotColors = 3; /* how many different dot colors are there currently in the game */
+		private int everyXlevelsAddColor = 2; /* adds a new color every X levels/shrinkings */
+
+		private PowerupController pc;
+
+		public GameObject getRandomPowerup() {
+			float r = Random.Range (0f, 1f);
+			float csum = 0;
+			foreach (PowerupController p in dotPowerupPrefabs) {
+				csum += p.powerupChanceWeight;
+				if (r <= csum)
+					return p.gameObject;
+			}
+
+			Debug.Log ("Something wrong with the power ups, spawning the first power up instead");
+			return dotPowerupPrefabs [0].gameObject; //this should never happen
+		}
+
+		public void scoreMultiplierIncrease(int delayInSecs) {
+			scoreMultiplier++;
+			Invoke ("scoreMultiplierDecrease", delayInSecs);
+		}
+
+		public void scoreMultiplierDecrease() {
+			scoreMultiplier--;
+		}
 
 		//spawn dot instantiates a new random dot from prefab array (manual assignment)
 		public IEnumerator SpawnDot()
@@ -58,9 +92,16 @@ namespace Dotflow
 			//picks random location
 			Vector2 spawnPos = new Vector2(Random.Range(-main.screenSize.x, main.screenSize.x), Random.Range(-main.screenSize.y, main.screenSize.y));
 
-			//picks random prefab
-			int randy = Mathf.RoundToInt(Random.Range (0, dotPrefabs.Length));
-			GameObject dotObject = Instantiate(dotPrefabs[randy]) as GameObject;
+			GameObject dotObject;
+			if (currentMaxDots > 4 && Random.Range(0f, 1f) <= chanceOfPowerupSpawn) { /* rolls the chance of a power up spawn */
+				dotObject = Instantiate (getRandomPowerup()) as GameObject;
+				dotObject.transform.rotation = Quaternion.identity;
+				dotObject.GetComponent<PowerupController>().powerupManager = powerupManager;
+			} else {
+				int randy = Mathf.RoundToInt (Random.Range (0, amountOfDotColors));
+				dotObject = Instantiate (dotPrefabs [randy]) as GameObject;
+				dotObject.transform.rotation = Quaternion.identity;
+			}
 
 			//sets parent and scale
 			dotObject.transform.parent = dotContainer.transform;
@@ -76,9 +117,8 @@ namespace Dotflow
 			dotObject.rigidbody2D.AddForce(randomVector);
 			dotObject.GetComponent<Dot>().dotManager = this;
 
-
 			dotCount += 1;
-
+			dotObject.transform.rotation = Quaternion.identity;
 			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns */
 		}
 
@@ -86,7 +126,13 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
-			if (dotCurrentSpeed >= speedDifficultyThreshold) { /* if speed threshold is reached, shrinking happens here */
+			audioManager.soundFX [4].Play ();
+
+			if (dotCurrentSpeed >= speedDifficultyThreshold && currentLevel <= numberOfLevels) { /* if speed threshold is reached, shrinking happens here */
+				currentLevel++;
+				if (currentLevel % everyXlevelsAddColor == 0 && amountOfDotColors < dotPrefabs.Length) /* one new color every 2 levels, unless there are no more new colors to add */
+					amountOfDotColors++;
+
 				StartCoroutine(startShrinking()); /* the intention is to have this shrink the dots to make it harder, but turn down the other difficulty knobs */
 			}
 
@@ -119,8 +165,22 @@ namespace Dotflow
 		private void DestroyDots(List<Dot> ds)
 		{
 			if (ds.Count >= 2) {
+				if(ds.Count >= 3 && ds.Count < 5)
+				{
+					//small complement
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(1), ds[ds.Count-1].transform.position);
+				} else if (ds.Count >= 5 && ds.Count < 7)
+				{
+					//medium complement
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(2), ds[ds.Count-1].transform.position);
+				} else if (ds.Count > 7)
+				{
+					//big complement
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(3), ds[ds.Count-1].transform.position);
+				}
 
-				score += 10 * ds.Count * ds.Count;
+
+				score += Mathf.RoundToInt(10f * (ds.Count*(ds.Count/2f)) * scoreMultiplier);
 				scoreLabel.text = score.ToString();
 
 				explosionRenderer.DrawExplosions (ds, lineColor);
@@ -144,7 +204,7 @@ namespace Dotflow
 		void ClearLine(){
 			listOfLineVertices.Clear();
 			dotsInLine.Clear();
-			lineColor = Color.clear;
+			lineColor = Color.white;
 		}
 
 		//draw line draws a line between all of the dots in the line, using the dot locations as vertices
@@ -178,13 +238,14 @@ namespace Dotflow
 					{
 						if(!dotsInLine.Contains(h.collider.GetComponentInParent<Dot>()))
 						{
-							if (lineColor == Color.clear || lineColor == h.collider.GetComponentInParent<Dot>().color)
+							Dot dot = h.collider.GetComponentInParent<Dot>();
+							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup)
 							{
-								Dot newDot = h.collider.GetComponentInParent<Dot>();
-								lineColor = h.collider.GetComponentInParent<Dot>().color;
+								if (!dot.isPowerup && lineColor == Color.white)
+									lineColor = dot.color;
 
-								dotsInLine.Add(newDot);
-								listOfLineVertices.Add(newDot.transform);
+								dotsInLine.Add(dot);
+								listOfLineVertices.Add(dot.transform);
 								if(dotsInLine.Count < audioManager.dotsConnecting.Length)
 								{
 									audioManager.dotsConnecting[dotsInLine.Count - 1].Play();
@@ -233,10 +294,14 @@ namespace Dotflow
 		public void CollisionWithLine (Dot collidedDot)
 		{
 
-			if (dotsInLine.Count > 0 && collidedDot.color != lineColor){
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && lineColor != Color.white){
 
 				if(livesClass.currentLives == 0)
 				{
+					/* highscore setting */
+					if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
+					PlayerPrefs.Save();
+						
 					livesClass.SetLifeTotal(0);
 					audioManager.soundFX[2].Play();
 					//Time.timeScale = 0.1f;
@@ -255,6 +320,9 @@ namespace Dotflow
 		//adds listener to UI elements
 		private void Start()
 		{
+			if (!PlayerPrefs.HasKey ("highScore"))
+				PlayerPrefs.SetInt ("highScore", 0);
+
 			livesClass.SetLifeTotal (startingLives);
 			currentMaxDots = startingAmountDots;
 		}

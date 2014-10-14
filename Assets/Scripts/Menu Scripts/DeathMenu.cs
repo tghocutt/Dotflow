@@ -15,7 +15,7 @@ public class DeathMenu : MonoBehaviour {
 	{
 		audioManager.ButtonClick ();
 		root.SetActive(false);
-		Application.LoadLevel("Main - tghocutt");
+		Application.LoadLevel(Application.loadedLevel);
 	}
 
 

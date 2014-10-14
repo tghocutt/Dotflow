@@ -9,6 +9,8 @@ namespace Dotflow
 		public bool clickedOrDetected;
 		public DotManager dotManager;
 		public int id;
+		public bool isPowerup;
+		public UIAnchor anchor;
 
 		[HideInInspector]
 		public Color color;
@@ -24,8 +26,6 @@ namespace Dotflow
 		private void Start () {
 
 			color = GetComponent<SpriteRenderer>().color;
-
-			gameObject.transform.rotation = new Quaternion(0f, 0f, Random.Range(0.0f, 360.0f), 0f);
 
 			dotManager.allDots.Add(this);
 
