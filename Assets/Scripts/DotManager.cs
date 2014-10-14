@@ -206,6 +206,14 @@ namespace Dotflow
 			lineColor = Color.white;
 		}
 
+
+		private IEnumerator WaitaFuckingFrame()
+		{
+			yield return new WaitForEndOfFrame();
+			StartCoroutine (DrawLine());
+		}
+
+
 		//draw line draws a line between all of the dots in the line, using the dot locations as vertices
 		private IEnumerator DrawLine()
 		{
@@ -284,7 +292,7 @@ namespace Dotflow
 				}
 
 				StartCoroutine (DrawLine ());
-				lineManager.updateColliders (listOfLineVertices, lineWidth, lineColor);
+				//lineManager.updateColliders (listOfLineVertices, lineWidth, lineColor);
 
 				//debugText.text = allDots[0].rigidbody2D.velocity.ToString();
 			}
