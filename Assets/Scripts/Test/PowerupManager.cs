@@ -8,6 +8,9 @@ public class PowerupManager : MonoBehaviour {
 	public float timePowerUp = 0f;
 	public bool slowTimeIsRunning = false;
 	public AudioManager audioManager;
+	private float tracker = 0;
+
+	private bool isPlaying = false;
 
 	public void SlowTimeGo(float f)
 	{
@@ -16,6 +19,7 @@ public class PowerupManager : MonoBehaviour {
 
 	public IEnumerator SlowTime(float f)
 	{
+		tracker = f;
 		slowTimeIsRunning = true;
 		timePowerUp += 5f;
 		Time.timeScale = f;
@@ -23,21 +27,22 @@ public class PowerupManager : MonoBehaviour {
 		while (timePowerUp >= 0f)
 		{
 			timePowerUp -= Time.deltaTime;
-			Debug.Log (audioManager.soundFX[5].clip.length + " : " + timePowerUp);
 			yield return null;
 		}
 		
 		Time.timeScale = 1f;
+		isPlaying = false;
 		slowTimeIsRunning = false;
 	}
 
 	private void Update()
 	{
-		if (slowTimeIsRunning && audioManager.soundFX [5].clip.length >= timePowerUp && audioManager.soundFX [5].isPlaying == false) 
+		if (slowTimeIsRunning && audioManager.soundFX [5].clip.length >= timePowerUp * 2.5f  && !isPlaying) 
 		{
 			audioManager.soundFX [5].Play ();
-			Debug.Log("im playing now");
+			Debug.Log("im playing now : " + audioManager.soundFX[5].isPlaying);
+			isPlaying = true;
 		}
-		if(audioManager.soundFX[5].time < timePowerUp) audioManager.soundFX[5].Stop();
+		//if(audioManager.soundFX[5].time < timePowerUp) audioManager.soundFX[5].Stop();
 	}
 }
