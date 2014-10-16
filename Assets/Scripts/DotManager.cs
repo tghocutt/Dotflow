@@ -206,13 +206,6 @@ namespace Dotflow
 		}
 
 
-		private IEnumerator WaitaFuckingFrame()
-		{
-			yield return new WaitForEndOfFrame();
-			StartCoroutine (DrawLine());
-		}
-
-
 		//draw line draws a line between all of the dots in the line, using the dot locations as vertices
 		private IEnumerator DrawLine()
 		{
@@ -271,7 +264,7 @@ namespace Dotflow
 
 
 		//detects input, and tracks dot count, and starts coroutine
-		private void Update()
+		private void LateUpdate()
 		{
 			if (!guiManager.guiActive) { /* stops in-game user input when the UI is active */
 
@@ -326,8 +319,7 @@ namespace Dotflow
 		//adds listener to UI elements
 		private void Start()
 		{
-			if (!PlayerPrefs.HasKey ("highScore"))
-				PlayerPrefs.SetInt ("highScore", 0);
+			if (!PlayerPrefs.HasKey ("highScore")) PlayerPrefs.SetInt ("highScore", 0);
 
 			livesClass.SetLifeTotal (startingLives);
 			currentMaxDots = startingAmountDots;

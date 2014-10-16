@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Test\BackgroundAnimator.cs" />
      <Compile Include="Assets\Scripts\Test\Complement.cs" />
      <Compile Include="Assets\Scripts\Test\ComplementManager.cs" />
+     <Compile Include="Assets\Scripts\Test\HUDFPS.cs" />
      <Compile Include="Assets\Scripts\Test\PowerupManager.cs" />
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Scripts\Test\SpawnComplement.cs" />

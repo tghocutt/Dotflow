@@ -49,19 +49,13 @@ namespace Dotflow {
 					listOfColliders[i].GetComponent<SpriteRenderer>().color = lineColor;
 
 					listOfColliders[i].spriteRenderer.enabled = true;
-					StartCoroutine(EnableColliders(true, i));
+					listOfColliders[i].boxCollider.enabled = true;
 				} else {
 					listOfColliders[i].spriteRenderer.enabled = false;
-					StartCoroutine(EnableColliders(false, i));
+					listOfColliders[i].boxCollider.enabled = false;
 				}
 			}
 			copyVertexList.Remove(mouseFollower.transform);
-		}
-
-		private IEnumerator EnableColliders(bool enabled, int i)
-		{
-			yield return new WaitForSeconds (0.5f);
-			listOfColliders[i].boxCollider.enabled = enabled;
 		}
 	}
 }

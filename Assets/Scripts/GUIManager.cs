@@ -12,7 +12,7 @@ namespace Dotflow
 		public UIButton pauseButton;
 
 		public UILabel scoreLabel;
-
+		public UILabel fpsLabel;
 
 		//Main Menu Elements
 		public GameObject mainMenuRoot;
@@ -79,5 +79,7 @@ namespace Dotflow
 			UIEventListener.Get (menuButton.gameObject).onClick += OpenMenu;
 			UIEventListener.Get (pauseButton.gameObject).onClick += PauseGame;
 		}
+
+
 	}
 }
