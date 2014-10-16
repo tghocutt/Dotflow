@@ -157,7 +157,6 @@ namespace Dotflow
 
 				yield return new WaitForEndOfFrame();
 			}
-			Debug.Log("Scale: " + spawnSize.ToString() + " Variable for Speed: " + dotCurrentSpeed + " Dot Speed: " + allDots[0].rigidbody2D.velocity.magnitude);
 		}
 
 		//takes a list of dots, destroys and removes them from the dotlist, 

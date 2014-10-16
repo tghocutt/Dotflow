@@ -52,8 +52,6 @@ namespace Dotflow
 			newPos = new Vector3 (newPos.x - 0.5f, newPos.y - 0.5f, newPos.z);
 			Vector3 newNewPos = new Vector3 (uiCamera.pixelWidth * newPos.x, uiCamera.pixelHeight * newPos.y, 0);
 
-			Debug.Log (newPos + "\n" + newNewPos);
-
 			GameObject go = NGUITools.AddChild(gameObject, prefab);
 
 			currentComplement = go;

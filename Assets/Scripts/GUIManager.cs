@@ -10,7 +10,6 @@ namespace Dotflow
 		//HUD elements
 		public UIButton menuButton;
 		public UIButton pauseButton;
-		public UIButton muteButton;
 
 		public UILabel scoreLabel;
 
@@ -79,7 +78,6 @@ namespace Dotflow
 			//HID Listeners
 			UIEventListener.Get (menuButton.gameObject).onClick += OpenMenu;
 			UIEventListener.Get (pauseButton.gameObject).onClick += PauseGame;
-			UIEventListener.Get (muteButton.gameObject).onClick += MuteGame;
 		}
 	}
 }
