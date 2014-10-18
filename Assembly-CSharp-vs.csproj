@@ -65,6 +65,10 @@
      <Compile Include="Assets\Scripts\Menu Scripts\ScoreReadout.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\MouseFollow.cs" />
+     <Compile Include="Assets\Scripts\NEW Menu Scripts\DotflowElement.cs" />
+     <Compile Include="Assets\Scripts\NEW Menu Scripts\DotflowMenu.cs" />
+     <Compile Include="Assets\Scripts\NEW Menu Scripts\DotflowUIManager.cs" />
+     <Compile Include="Assets\Scripts\NEW Menu Scripts\MenuTest.cs" />
      <Compile Include="Assets\Scripts\NEWExplosionAnimation.cs" />
      <Compile Include="Assets\Scripts\PowerupController.cs" />
      <Compile Include="Assets\Scripts\Test\BackgroundAnimator.cs" />
