@@ -97,11 +97,11 @@ namespace Dotflow
 			GameObject dotObject;
 			if (currentMaxDots > 4 && Random.Range(0f, 1f) <= chanceOfPowerupSpawn) { /* rolls the chance of a power up spawn */
 				dotObject = Instantiate (getRandomPowerup()) as GameObject;
-				dotObject.transform.rotation = Quaternion.identity;
 				dotObject.GetComponent<PowerupController>().powerupManager = powerupManager;
+				dotObject.transform.parent = dotContainer.transform;
+				allDots[dotCount] = dotObject.GetComponent<Dot>();
 			} else {
 				int randy = Mathf.RoundToInt (Random.Range (0, amountOfDotColors));
-
 				allDots[dotCount].SetColor(arrayOfDotColors[randy]);
 				dotObject = allDots[dotCount].gameObject;
 				dotObject.SetActive(true);
@@ -120,9 +120,9 @@ namespace Dotflow
 			dotObject.rigidbody2D.AddForce(randomVector);
 			dotObject.GetComponent<Dot>().dotManager = this;
 
-			dotCount += 1;
 			dotObject.transform.rotation = Quaternion.identity;
-			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns */
+			dotCount += 1;
+			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns (doesnt seem to work) */
 		}
 
 
@@ -188,12 +188,19 @@ namespace Dotflow
 				explosionRenderer.DrawExplosions (ds, lineColor);
 				//loops through dots in line, destroys them, removes them from dotlist
 				foreach (Dot d in ds) {
-					d.gameObject.SetActive(false); /* deactivates the dot's game object */
-
-					allDots.Remove(d);
-					allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
+					if (d.isPowerup) {
+						GameObject newDot = Instantiate(dotPrefab) as GameObject;
+						newDot.transform.parent = dotContainer.transform;
+						newDot.SetActive(false);
+						allDots[allDots.IndexOf(d)] = newDot.GetComponent<Dot>(); //recreates a blank, inactive dot to replace the powerup
+						Destroy(d.gameObject);
+					} else {
+						d.gameObject.SetActive(false); /* deactivates the dot's game object */
+						allDots.Remove(d);
+						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
+					}
 					dotCount -= 1;
-					audioManager.Pop ();
+					audioManager.Pop ();					
 				}
 				IncreaseDifficulty ();
 			}
