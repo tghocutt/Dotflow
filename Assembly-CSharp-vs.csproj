@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{EA42F1B4-EB45-18C9-BD16-C515EA1F4775}</ProjectGuid>
+	<ProjectGuid>{E3F1D061-48BB-E197-02BD-D77E600B9A83}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Menu Scripts\ScoreReadout.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\MouseFollow.cs" />
+     <Compile Include="Assets\Scripts\NEW Menu Scripts\CreditsMenuScript.cs" />
      <Compile Include="Assets\Scripts\NEW Menu Scripts\DotflowElement.cs" />
      <Compile Include="Assets\Scripts\NEW Menu Scripts\DotflowMenu.cs" />
      <Compile Include="Assets\Scripts\NEW Menu Scripts\DotflowUIManager.cs" />
@@ -248,7 +249,7 @@
      <None Include="Assets\Shared\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Resources\Localization.txt" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/TSI25/Documents/Dotflow10-12-14/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/TSI25/Documents/GitHub/NEWDotflowRepository/Dotflow/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
