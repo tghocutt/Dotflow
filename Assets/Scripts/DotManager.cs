@@ -126,9 +126,8 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
-			audioManager.soundFX [4].Play ();
-
 			if (dotCurrentSpeed >= speedDifficultyThreshold && currentLevel <= numberOfLevels) { /* if speed threshold is reached, shrinking happens here */
+				audioManager.soundFX [4].Play ();
 				currentLevel++;
 				if (currentLevel % everyXlevelsAddColor == 0 && amountOfDotColors < dotPrefabs.Length) /* one new color every 2 levels, unless there are no more new colors to add */
 					amountOfDotColors++;
@@ -158,7 +157,6 @@ namespace Dotflow
 
 				yield return new WaitForEndOfFrame();
 			}
-			Debug.Log("Scale: " + spawnSize.ToString() + " Variable for Speed: " + dotCurrentSpeed + " Dot Speed: " + allDots[0].rigidbody2D.velocity.magnitude);
 		}
 
 		//takes a list of dots, destroys and removes them from the dotlist, 
@@ -206,6 +204,7 @@ namespace Dotflow
 			dotsInLine.Clear();
 			lineColor = Color.white;
 		}
+
 
 		//draw line draws a line between all of the dots in the line, using the dot locations as vertices
 		private IEnumerator DrawLine()
@@ -265,7 +264,7 @@ namespace Dotflow
 
 
 		//detects input, and tracks dot count, and starts coroutine
-		private void Update()
+		private void LateUpdate()
 		{
 			if (!guiManager.guiActive) { /* stops in-game user input when the UI is active */
 
@@ -285,7 +284,7 @@ namespace Dotflow
 				}
 
 				StartCoroutine (DrawLine ());
-				lineManager.updateColliders (listOfLineVertices, lineWidth, lineColor);
+				//lineManager.updateColliders (listOfLineVertices, lineWidth, lineColor);
 
 				//debugText.text = allDots[0].rigidbody2D.velocity.ToString();
 			}
@@ -320,8 +319,7 @@ namespace Dotflow
 		//adds listener to UI elements
 		private void Start()
 		{
-			if (!PlayerPrefs.HasKey ("highScore"))
-				PlayerPrefs.SetInt ("highScore", 0);
+			if (!PlayerPrefs.HasKey ("highScore")) PlayerPrefs.SetInt ("highScore", 0);
 
 			livesClass.SetLifeTotal (startingLives);
 			currentMaxDots = startingAmountDots;
