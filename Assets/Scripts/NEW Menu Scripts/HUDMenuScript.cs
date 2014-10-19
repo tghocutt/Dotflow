@@ -3,8 +3,10 @@ using System.Collections;
 
 namespace Dotflow
 {
-	public class CreditsMenuScript : DotflowMenu {
+	public class HUDMenuScript : DotflowMenu {
 
+
+		public DotflowElement[] hudElements = new DotflowElement[0];
 
 		public override void Open(DotflowElement[] elements)
 		{
@@ -14,13 +16,12 @@ namespace Dotflow
 
 		public override void Close(DotflowElement[] elements)
 		{
-			base.Open (elements);
+			base.Close (elements);
 		}
-
 
 		private void Start () 
 		{
-		
+			
 		}
 	}
 }
