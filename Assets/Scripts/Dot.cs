@@ -15,19 +15,21 @@ namespace Dotflow
 		[HideInInspector]
 		public Color color;
 
-
-
 		public void Draw(GameObject go)
 		{
 			dotManager.listOfLineVertices.Add(this.gameObject.transform);
 		}
 
+		public void SetColor(Color color){
+			this.color = color;
+			GetComponent<SpriteRenderer>().color = color;
+		}
 
 		private void Start () {
 
 			color = GetComponent<SpriteRenderer>().color;
 
-			dotManager.allDots.Add(this);
+			//dotManager.allDots.Add(this);
 
 			id = this.GetInstanceID ();
 		}
