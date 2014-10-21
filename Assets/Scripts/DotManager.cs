@@ -101,10 +101,7 @@ namespace Dotflow
 				dotObject.transform.parent = dotContainer.transform;
 				allDots[dotCount] = dotObject.GetComponent<Dot>();
 			} else {
-				int randy = Mathf.RoundToInt (Random.Range (0, amountOfDotColors));
-				allDots[dotCount].SetColor(arrayOfDotColors[randy]);
-				dotObject = allDots[dotCount].gameObject;
-				dotObject.SetActive(true);
+				dotObject = activateNewDot(dotCount);
 			}
 			
 			//sets scale
@@ -125,6 +122,13 @@ namespace Dotflow
 			yield return new WaitForSeconds (2f); /* 2f is a constant 2 second delay minimum between dot spawns (doesnt seem to work) */
 		}
 
+		GameObject activateNewDot(int dotPosition) { /* takes the first inactive dot on the list, randomizes a new color for it, activates it, and returns it's gameObject */
+			int randy = Mathf.RoundToInt (Random.Range (0, amountOfDotColors));
+			allDots[dotPosition].SetColor(arrayOfDotColors[randy]);
+			GameObject dotObject = allDots[dotPosition].gameObject;
+			dotObject.SetActive(true);
+			return dotObject;
+		}
 
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
@@ -188,15 +192,18 @@ namespace Dotflow
 				explosionRenderer.DrawExplosions (ds, lineColor);
 				//loops through dots in line, destroys them, removes them from dotlist
 				foreach (Dot d in ds) {
+					allDots.Remove(d);
+
 					if (d.isPowerup) {
+						/* recreates a new inactive neutral dot and adds it to the end of the list */
 						GameObject newDot = Instantiate(dotPrefab) as GameObject;
+						allDots.Add(newDot.GetComponent<Dot>());
 						newDot.transform.parent = dotContainer.transform;
 						newDot.SetActive(false);
-						allDots[allDots.IndexOf(d)] = newDot.GetComponent<Dot>(); //recreates a blank, inactive dot to replace the powerup
+
 						Destroy(d.gameObject);
 					} else {
 						d.gameObject.SetActive(false); /* deactivates the dot's game object */
-						allDots.Remove(d);
 						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
 					}
 					dotCount -= 1;
@@ -288,7 +295,7 @@ namespace Dotflow
 						audioManager.soundFX [1].Stop ();
 				}
 
-				if (allDots.Count >= maxAmountDots && dotCount < currentMaxDots) {
+				if (allDots.Count >= maxAmountDots && dotCount < currentMaxDots) { /* it only starts to spawn dots if the pool is done being filled, and, if there's less dots than it should */
 						StartCoroutine("SpawnDot");
 				}
 
