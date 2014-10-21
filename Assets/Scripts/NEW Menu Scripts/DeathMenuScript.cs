@@ -6,6 +6,7 @@ namespace Dotflow
 	public class DeathMenuScript : DotflowMenu {
 
 		public DotflowElement[] DeathMenuElements = new DotflowElement[0];
+		public bool childrenMoving = false;
 
 		public override void Open(DotflowElement[] elements)
 		{
@@ -21,13 +22,32 @@ namespace Dotflow
 
 		private void Quit(GameObject go)
 		{
-			Application.Quit ();
+			if (!DotflowUIManager.isMenuMoving) 
+			{
+				Application.Quit ();
+			}
 		}
 
 
 		private void Restart(GameObject go)
 		{
+			if (!DotflowUIManager.isMenuMoving) 
+			{
+				Close (DeathMenuElements);
+				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
+			}	
+		}
 
+
+		private void Update()
+		{
+			bool moving = false;
+			foreach(DotflowElement e in DeathMenuElements)
+			{
+				if(e.amIMoving) moving = true;
+				break;
+			}
+			childrenMoving = moving;
 		}
 
 

@@ -5,18 +5,35 @@ namespace Dotflow
 {
 	public class DotflowUIManager : MonoBehaviour {
 
-		public DotflowMenu mainMenuObj;
-		public DotflowMenu settingsMenuObj;
-		public DotflowMenu creditsMenuObj;
-		public DotflowMenu deathMenuObj;
-		public DotflowMenu HUDObj;
+		public MainMenuScript mainMenuObj;
+		public SettingsMenuScript settingsMenuObj;
+		public CreditsMenuScript creditsMenuObj;
+		public DeathMenuScript deathMenuObj;
+		public HUDMenuScript HUDObj;
 
-		public static DotflowMenu mainMenu;
-		public static DotflowMenu settingsMenu;
-		public static DotflowMenu creditsMenu;
-		public static DotflowMenu deathMenu;
-		public static DotflowMenu HUD;
+		public static MainMenuScript mainMenu;
+		public static SettingsMenuScript settingsMenu;
+		public static CreditsMenuScript creditsMenu;
+		public static DeathMenuScript deathMenu;
+		public static HUDMenuScript HUD;
+		public static bool isMenuMoving = false;
 		public static bool isMenuActive = true;
+
+
+		private void Update()
+		{
+			if (!mainMenuObj.childrenMoving &&
+				!settingsMenuObj.childrenMoving &&
+				!creditsMenuObj.childrenMoving &&
+				!deathMenuObj.childrenMoving &&
+				!HUDObj.childrenMoving) 
+			{
+				isMenuMoving = false;
+			} else {
+				isMenuMoving = true;
+			}
+		}
+
 
 		private void Start()
 		{

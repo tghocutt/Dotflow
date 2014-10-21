@@ -5,7 +5,8 @@ namespace Dotflow
 {
 	public class SettingsMenuScript : DotflowMenu {
 
-		public DotflowElement[] creditsMenuElements = new DotflowElement[0];
+		public DotflowElement[] settingsMenuElements = new DotflowElement[0];
+		public bool childrenMoving = false;
 
 		public override void Open(DotflowElement[] elements)
 		{
@@ -16,6 +17,7 @@ namespace Dotflow
 		public override void Close(DotflowElement[] elements)
 		{
 			base.Close (elements);
+
 		}
 
 		private void MasterMute(GameObject go)
@@ -33,12 +35,33 @@ namespace Dotflow
 			
 		}
 
+		private void GoBack(GameObject go)
+		{
+			if (!DotflowUIManager.isMenuMoving) {
+				Close (settingsMenuElements);
+				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);
+			}
+		}
+
+
+		private void Update()
+		{
+			bool moving = false;
+			foreach(DotflowElement e in settingsMenuElements)
+			{
+				if(e.amIMoving) moving = true;
+				break;
+			}
+			childrenMoving = moving;
+		}
+
 
 		private void Start () 
 		{
-			UIEventListener.Get (creditsMenuElements[0].gameObject).onClick += MasterMute;
-			UIEventListener.Get (creditsMenuElements[5].gameObject).onClick += MusicMute;
-			UIEventListener.Get (creditsMenuElements[6].gameObject).onClick += SFXMute;
+			UIEventListener.Get (settingsMenuElements[0].gameObject).onClick += MasterMute;
+			UIEventListener.Get (settingsMenuElements[5].gameObject).onClick += MusicMute;
+			UIEventListener.Get (settingsMenuElements[6].gameObject).onClick += SFXMute;
+			UIEventListener.Get (settingsMenuElements[4].gameObject).onClick += GoBack;
 		}
 	}
 }

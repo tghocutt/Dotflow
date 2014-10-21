@@ -266,7 +266,7 @@ namespace Dotflow
 		//detects input, and tracks dot count, and starts coroutine
 		private void LateUpdate()
 		{
-			if (!guiManager.guiActive) { /* stops in-game user input when the UI is active */
+			if (!DotflowUIManager.isMenuActive) { /* stops in-game user input when the UI is active */
 
 				if (Input.GetMouseButtonDown (0)) {
 						lineBeingDrawn = true;

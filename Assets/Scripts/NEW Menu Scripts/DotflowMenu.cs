@@ -4,11 +4,11 @@ using System.Collections;
 namespace Dotflow
 {
 	public class DotflowMenu : MonoBehaviour {
-		
 
 
 		public virtual void Open(DotflowElement[] elements)
 		{
+			StopAllCoroutines ();
 			foreach (DotflowElement element in elements) 
 			{
 				StartCoroutine(EnterScreen(element));
@@ -27,31 +27,39 @@ namespace Dotflow
 
 		private IEnumerator EnterScreen(DotflowElement element)
 		{
+			element.amIMoving = true;
 			element.transform.position = element.startScreenPosition;
+			element.gameObject.SetActive (true);
 
 			float randy = Random.Range (element.speedMin, element.speedMax);
 			float timeElapsed = 0f;
 
-			while(timeElapsed <= element.desiredTime)
+			while(timeElapsed <= element.desiredTime || element.gameObject.transform.localPosition != element.onScreenPosition)
 			{
-				element.transform.localPosition = Vector3.Lerp(element.startScreenPosition, element.onScreenPosition, randy * Time.deltaTime);
+				element.gameObject.SetActive (true);
+				element.transform.localPosition = Vector3.Lerp(element.startScreenPosition, element.onScreenPosition, randy * timeElapsed);
 				timeElapsed += Time.deltaTime;
-				yield return null;
+				if(element.gameObject.transform.localPosition == element.onScreenPosition)  break;
+				
+				yield return new WaitForEndOfFrame();
 			}
+			element.amIMoving = false;
 		}
 
 
 		private IEnumerator ExitScreen(DotflowElement element)
 		{
+			element.amIMoving = false;
+			Vector3 currentPos = element.gameObject.transform.localPosition;
 			float randy = Random.Range (element.speedMin, element.speedMax);
 
 			float timeElapsed = 0f;
 			
 			while(timeElapsed <= element.desiredTime)
 			{
-				element.transform.localPosition = Vector3.Lerp(element.onScreenPosition, element.offScreenPosition, randy * timeElapsed);
+				element.transform.localPosition = Vector3.Lerp(currentPos, element.offScreenPosition, randy * timeElapsed);
 				timeElapsed += Time.deltaTime;
-				yield return null;
+				yield return new WaitForEndOfFrame();
 			}
 		}
 	}

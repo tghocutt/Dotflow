@@ -7,6 +7,7 @@ namespace Dotflow
 
 
 		public DotflowElement[] hudElements = new DotflowElement[0];
+		public bool childrenMoving = false;
 
 		public override void Open(DotflowElement[] elements)
 		{
@@ -19,9 +20,30 @@ namespace Dotflow
 			base.Close (elements);
 		}
 
+
+		private void Menu(GameObject go)
+		{
+			if (!DotflowUIManager.isMenuMoving) {
+				Close (hudElements);
+				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);
+			}
+		}
+
+
+		private void Update()
+		{
+			bool moving = false;
+			foreach(DotflowElement e in hudElements)
+			{
+				if(e.amIMoving) moving = true;
+				break;
+			}
+			childrenMoving = moving;
+		}
+
 		private void Start () 
 		{
-			
+			UIEventListener.Get (hudElements[0].gameObject).onClick += Menu;
 		}
 	}
 }

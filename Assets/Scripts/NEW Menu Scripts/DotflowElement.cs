@@ -11,5 +11,6 @@ namespace Dotflow
 		public float speedMin = 1;
 		public float speedMax = 5;
 		public float desiredTime = 3;
+		public bool amIMoving = false;
 	}
 }
