@@ -68,6 +68,7 @@ namespace Dotflow
 		{
 			if (!DotflowUIManager.isMenuMoving) 
 			{
+				DotflowUIManager.isMenuActive = false;
 				Close (mainMenuElements);
 				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
 			}

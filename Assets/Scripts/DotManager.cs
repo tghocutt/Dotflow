@@ -7,7 +7,7 @@ namespace Dotflow
 	public class DotManager : MonoBehaviour {
 
 		public ComplementManager complementManager;
-		public GUIManager guiManager;
+		//public GUIManager guiManager;
 		public ExplosionRenderer explosionRenderer;
 		public Main main; /* instance of the Main script (you can find it on the scripts folder), this is being used to figure out the screen size for the spawning */
 		public AudioManager audioManager; /* the object that holds all the audio and plays it */
@@ -128,6 +128,7 @@ namespace Dotflow
 			GameObject dotObject = allDots[dotPosition].gameObject;
 			dotObject.SetActive(true);
 			return dotObject;
+			Debug.Log ("I'm happening");
 		}
 
 		//increases the difficulty of the game
@@ -300,6 +301,12 @@ namespace Dotflow
 				}
 
 				StartCoroutine (DrawLine ());
+
+				//Debug.Log ("current max dots: " + currentMaxDots + " | dot count: " + dotCount);
+				//if(currentMaxDots > dotCount)
+				//{
+			//		StartCoroutine(SpawnDot());
+				//}
 			}
 		}
 
@@ -317,9 +324,9 @@ namespace Dotflow
 					livesClass.SetLifeTotal(0);
 					audioManager.soundFX[2].Play();
 					//Time.timeScale = 0.1f;
-					guiManager.deathMenuRoot.SetActive(true);
+					//guiManager.deathMenuRoot.SetActive(true);
 					ClearLine();
-					guiManager.guiActive = true;
+					//guiManager.guiActive = true;
 				} else {
 					livesClass.SetLifeTotal(livesClass.currentLives - 1);
 					audioManager.soundFX[2].Play();

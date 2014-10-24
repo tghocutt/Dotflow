@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Lives : MonoBehaviour {
+namespace Dotflow
+{
+	public class Lives : MonoBehaviour {
 
-	public GameObject[] lives;
+		public GameObject[] lives;
 
-	public int maxLives;
-	public int currentLives;
+		public int maxLives;
+		public int currentLives;
 
-	public void SetLifeTotal(int total)
-	{
-		if (total >= 0 && total <= 5) 
+		public void SetLifeTotal(int total)
 		{
-			for(int i = 0; i < 5; i++)
+			if (total >= 0 && total <= 5) 
 			{
-				lives[i].SetActive((i + 1) <= total);
-			}
+				for (int i = 0; i < 5; i++) 
+				{
+					lives [i].SetActive ((i + 1) <= total);
+				}
 
-			currentLives = total;
+				currentLives = total;
+			}
 		}
 	}
 }

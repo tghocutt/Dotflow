@@ -24,6 +24,7 @@ namespace Dotflow
 		private void Menu(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving) {
+				DotflowUIManager.isMenuActive = true;
 				Close (hudElements);
 				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);
 			}
