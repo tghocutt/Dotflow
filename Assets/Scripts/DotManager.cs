@@ -312,7 +312,6 @@ namespace Dotflow
 
 		public void CollisionWithLine (Dot collidedDot)
 		{
-
 			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && lineColor != Color.white){
 
 				if(livesClass.currentLives == 0)
@@ -327,6 +326,8 @@ namespace Dotflow
 					//guiManager.deathMenuRoot.SetActive(true);
 					ClearLine();
 					//guiManager.guiActive = true;
+
+					//TODO: call death menu here
 				} else {
 					livesClass.SetLifeTotal(livesClass.currentLives - 1);
 					audioManager.soundFX[2].Play();
@@ -334,6 +335,19 @@ namespace Dotflow
 					lineBeingDrawn = false;
 				}
 			}
+		}
+
+		void RestartGame() {
+			foreach (Dot d in allDots) {
+				d.gameObject.SetActive(false); //setting all dots to be inactive
+			}
+
+			dotCount = 0;
+			score = 0;
+			livesClass.SetLifeTotal (startingLives);
+			currentLevel = 1;
+			currentMaxDots = startingAmountDots;
+			dotCurrentSpeed = dotSlowestSpeed;
 		}
 
 		private void Start()
