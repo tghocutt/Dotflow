@@ -80,6 +80,8 @@
      <Compile Include="Assets\Scripts\Test\Complement.cs" />
      <Compile Include="Assets\Scripts\Test\ComplementManager.cs" />
      <Compile Include="Assets\Scripts\Test\HUDFPS.cs" />
+     <Compile Include="Assets\Scripts\Test\MusicPlayer.cs" />
+     <Compile Include="Assets\Scripts\Test\MusicTrackCollection.cs" />
      <Compile Include="Assets\Scripts\Test\ParticleRendererRotater.cs" />
      <Compile Include="Assets\Scripts\Test\PowerupManager.cs" />
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
