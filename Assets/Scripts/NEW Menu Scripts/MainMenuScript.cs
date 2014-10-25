@@ -27,6 +27,8 @@ namespace Dotflow
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);
+				DotflowUIManager.isMenuActive = false;
+				DotflowUIManager._dotManager.RestartGame();
 				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
 			}
 		}

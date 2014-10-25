@@ -24,7 +24,9 @@ namespace Dotflow
 		{
 			if (!DotflowUIManager.isMenuMoving) 
 			{
-				Application.Quit ();
+				DotflowUIManager._dotManager.RestartGame();
+				Close (DeathMenuElements);
+				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);
 			}
 		}
 
@@ -34,8 +36,10 @@ namespace Dotflow
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (DeathMenuElements);
+				DotflowUIManager._dotManager.RestartGame();
 				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
-			}	
+				DotflowUIManager.isMenuActive = false;
+			}
 		}
 
 
@@ -52,8 +56,8 @@ namespace Dotflow
 
 
 		private void Start () {
-			UIEventListener.Get (DeathMenuElements[0].gameObject).onClick += Quit;
-			UIEventListener.Get (DeathMenuElements[1].gameObject).onClick += Restart;
+			UIEventListener.Get (DeathMenuElements[0].gameObject).onClick += Restart;
+			UIEventListener.Get (DeathMenuElements[1].gameObject).onClick += Quit;
 		}
 	}
 }

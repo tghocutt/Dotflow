@@ -5,6 +5,8 @@ namespace Dotflow
 {
 	public class DotflowUIManager : MonoBehaviour {
 
+		public DotManager dotManager;
+
 		public MainMenuScript mainMenuObj;
 		public SettingsMenuScript settingsMenuObj;
 		public CreditsMenuScript creditsMenuObj;
@@ -18,7 +20,7 @@ namespace Dotflow
 		public static HUDMenuScript HUD;
 		public static bool isMenuMoving = false;
 		public static bool isMenuActive = true;
-
+		public static DotManager _dotManager;
 
 		private void Update()
 		{
@@ -42,6 +44,7 @@ namespace Dotflow
 			creditsMenu = creditsMenuObj;
 			deathMenu = deathMenuObj;
 			HUD = HUDObj;
+			_dotManager = dotManager;
 		}
 	}
 }

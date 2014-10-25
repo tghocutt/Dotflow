@@ -60,6 +60,7 @@ namespace Dotflow
 
 		public Color lineColor = Color.white; /* the current color of the line, Color.white meaning no line/no color */
 
+		public float startingSpawnSize;
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
 		private int amountOfDotColors = 3; /* how many different dot colors are there currently in the game */
 		private int everyXlevelsAddColor = 2; /* adds a new color every X levels/shrinkings */
@@ -328,6 +329,10 @@ namespace Dotflow
 					//guiManager.guiActive = true;
 
 					//TODO: call death menu here
+					DotflowUIManager.isMenuActive = true;
+					DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
+					DotflowUIManager.deathMenu.Open(DotflowUIManager.deathMenu.DeathMenuElements);
+
 				} else {
 					livesClass.SetLifeTotal(livesClass.currentLives - 1);
 					audioManager.soundFX[2].Play();
@@ -337,7 +342,7 @@ namespace Dotflow
 			}
 		}
 
-		void RestartGame() {
+		public void RestartGame() {
 			foreach (Dot d in allDots) {
 				d.gameObject.SetActive(false); //setting all dots to be inactive
 			}
@@ -346,8 +351,10 @@ namespace Dotflow
 			score = 0;
 			livesClass.SetLifeTotal (startingLives);
 			currentLevel = 1;
+			amountOfDotColors = 3;
 			currentMaxDots = startingAmountDots;
 			dotCurrentSpeed = dotSlowestSpeed;
+			spawnSize = startingSpawnSize;
 		}
 
 		private void Start()
@@ -356,7 +363,7 @@ namespace Dotflow
 
 			livesClass.SetLifeTotal (startingLives);
 			currentMaxDots = startingAmountDots;
-
+			spawnSize = startingSpawnSize;
 			for (int i = 0; i < maxAmountDots; i++)
 			{
 				GameObject newDot = Instantiate(dotPrefab) as GameObject;
