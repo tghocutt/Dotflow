@@ -9,6 +9,7 @@ namespace Dotflow
 		public DotflowElement[] hudElements = new DotflowElement[0];
 		public bool childrenMoving = false;
 
+
 		public override void Open(DotflowElement[] elements)
 		{
 			base.Open (elements);

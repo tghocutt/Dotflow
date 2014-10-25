@@ -8,6 +8,8 @@ namespace Dotflow
 		public DotflowElement[] settingsMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
 
+		public UISlider masterSlider;
+
 		public override void Open(DotflowElement[] elements)
 		{
 			base.Open (elements);
@@ -46,6 +48,8 @@ namespace Dotflow
 
 		private void Update()
 		{
+			AudioListener.volume = masterSlider.value;
+
 			bool moving = false;
 			foreach(DotflowElement e in settingsMenuElements)
 			{

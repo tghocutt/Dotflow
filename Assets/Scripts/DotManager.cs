@@ -349,6 +349,7 @@ namespace Dotflow
 
 			dotCount = 0;
 			score = 0;
+			scoreLabel.text = score.ToString();
 			livesClass.SetLifeTotal (startingLives);
 			currentLevel = 1;
 			amountOfDotColors = 3;
