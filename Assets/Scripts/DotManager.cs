@@ -40,6 +40,7 @@ namespace Dotflow
 
 		public float dotCurrentSpeed = 100f; /* current speed of the dots, increases during the game, up until the threshold above */
 		public float dotSlowestSpeed = 100f; /* base top speed that all dots start on, aka the slowest speed */
+		public float dotMaxSpeed = 200f; /* maximum speed the dots can achieve */
 		public float dotSpeedBoostAmount = 1f; /* how much speed each boost gives to the dots */
 
 		//public LineRenderer lineRenderer; /* the Renderer component for the lines */
@@ -62,7 +63,7 @@ namespace Dotflow
 
 		public float startingSpawnSize;
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private int amountOfDotColors = 3; /* how many different dot colors are there currently in the game */
+		private int amountOfDotColors = 1; /* how many different dot colors are there currently in the game */
 		private int everyXlevelsAddColor = 2; /* adds a new color every X levels/shrinkings */
 
 		private PowerupController pc;
@@ -100,6 +101,8 @@ namespace Dotflow
 				dotObject = Instantiate (getRandomPowerup()) as GameObject;
 				dotObject.GetComponent<PowerupController>().powerupManager = powerupManager;
 				dotObject.transform.parent = dotContainer.transform;
+
+				Destroy(allDots[dotCount].gameObject);
 				allDots[dotCount] = dotObject.GetComponent<Dot>();
 			} else {
 				dotObject = activateNewDot(dotCount);
@@ -135,6 +138,9 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
+			if (amountOfDotColors < 3) /* the game starts with 1 color, and adds the other 2 after the first 2 lines, after that it proceeds as normal */
+				amountOfDotColors++;
+
 			if (dotCurrentSpeed >= speedDifficultyThreshold && currentLevel <= numberOfLevels) { /* if speed threshold is reached, shrinking happens here */
 				audioManager.soundFX [4].Play ();
 				currentLevel++;
@@ -147,7 +153,8 @@ namespace Dotflow
 			if (currentMaxDots < maxAmountDots) /* if the maximum dot cap hasn't been reached */
 				currentMaxDots++; /* increase the max amount of dots by 1 */
 
-			dotCurrentSpeed = dotCurrentSpeed + dotSpeedBoostAmount; /* increase the speed of all dots */
+			if (dotCurrentSpeed < dotMaxSpeed)
+				dotCurrentSpeed = dotCurrentSpeed + dotSpeedBoostAmount; /* increase the speed of all dots */
 
 		}
 	
@@ -317,6 +324,8 @@ namespace Dotflow
 
 				if(livesClass.currentLives == 0)
 				{
+					ClearLine();
+
 					/* highscore setting */
 					if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
 					PlayerPrefs.Save();
@@ -325,10 +334,8 @@ namespace Dotflow
 					audioManager.soundFX[2].Play();
 					//Time.timeScale = 0.1f;
 					//guiManager.deathMenuRoot.SetActive(true);
-					ClearLine();
 					//guiManager.guiActive = true;
 
-					//TODO: call death menu here
 					DotflowUIManager.isMenuActive = true;
 					DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
 					DotflowUIManager.deathMenu.Open(DotflowUIManager.deathMenu.DeathMenuElements);
@@ -352,7 +359,7 @@ namespace Dotflow
 			scoreLabel.text = score.ToString();
 			livesClass.SetLifeTotal (startingLives);
 			currentLevel = 1;
-			amountOfDotColors = 3;
+			amountOfDotColors = 1;
 			currentMaxDots = startingAmountDots;
 			dotCurrentSpeed = dotSlowestSpeed;
 			spawnSize = startingSpawnSize;
