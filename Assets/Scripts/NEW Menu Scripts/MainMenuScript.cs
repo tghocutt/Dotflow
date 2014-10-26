@@ -9,19 +9,20 @@ namespace Dotflow
 		public DotflowElement[] mainMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
 
+		//implemented from the base class
 		public override void Open(DotflowElement[] elements)
 		{
 			base.Open (elements);
 		}
 
-
+		//implemented from the base class
 		public override void Close(DotflowElement[] elements)
 		{
 			base.Close (elements);
 		}
 		
 
-
+		//restarts a new game with new dots.
 		private void Back(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving) 
@@ -32,7 +33,8 @@ namespace Dotflow
 				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
 			}
 		}
-		
+
+		//opens up the settings menu
 		private void Settings(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving) {
@@ -41,6 +43,7 @@ namespace Dotflow
 			}
 		}
 
+		//opens up the credits menu
 		private void Credits(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving) 
@@ -50,6 +53,7 @@ namespace Dotflow
 			}
 		}
 
+		//exits out of the application
 		private void Quit(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving) 
@@ -58,6 +62,8 @@ namespace Dotflow
 			}
 		}
 
+		//does nothing currently
+		//TODO what do we want this to do?
 		private void Menu(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving)
@@ -66,6 +72,7 @@ namespace Dotflow
 			}
 		}
 
+		//resumes the current game
 		private void Play(GameObject go)
 		{
 			if (!DotflowUIManager.isMenuMoving) 
@@ -76,7 +83,8 @@ namespace Dotflow
 			}
 		}
 
-
+		//keeps track of all of its child elements to determine
+		//if they are moving.
 		private void Update()
 		{
 			bool moving = false;
@@ -89,7 +97,7 @@ namespace Dotflow
 		}
 
 
-
+		//adds listeners to the appropriate dotflow elements
 		private void Start () {
 			UIEventListener.Get (mainMenuElements[0].gameObject).onClick += Back;
 			UIEventListener.Get (mainMenuElements[1].gameObject).onClick += Settings;

@@ -22,6 +22,7 @@ namespace Dotflow
 		public static bool isMenuActive = true;
 		public static DotManager _dotManager;
 
+		//keeps track of whether the menus are moving or not.
 		private void Update()
 		{
 			if (!mainMenuObj.childrenMoving &&
@@ -37,6 +38,8 @@ namespace Dotflow
 		}
 
 
+		//sets all the public static objects from the
+		//inspector driven objects.
 		private void Start()
 		{
 			mainMenu = mainMenuObj;
