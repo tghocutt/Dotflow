@@ -336,9 +336,7 @@ namespace Dotflow
 					//guiManager.deathMenuRoot.SetActive(true);
 					//guiManager.guiActive = true;
 
-					DotflowUIManager.isMenuActive = true;
-					DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
-					DotflowUIManager.deathMenu.Open(DotflowUIManager.deathMenu.DeathMenuElements);
+					StartCoroutine(OpenDeathMenu());
 
 				} else {
 					livesClass.SetLifeTotal(livesClass.currentLives - 1);
@@ -364,6 +362,17 @@ namespace Dotflow
 			dotCurrentSpeed = dotSlowestSpeed;
 			spawnSize = startingSpawnSize;
 		}
+
+
+		private IEnumerator OpenDeathMenu()
+		{
+			yield return new WaitForEndOfFrame ();
+
+			DotflowUIManager.isMenuActive = true;
+			DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
+			DotflowUIManager.deathMenu.Open(DotflowUIManager.deathMenu.DeathMenuElements);
+		}
+
 
 		private void Start()
 		{

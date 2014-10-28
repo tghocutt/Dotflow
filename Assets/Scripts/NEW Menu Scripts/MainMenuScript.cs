@@ -103,7 +103,7 @@ namespace Dotflow
 			UIEventListener.Get (mainMenuElements[1].gameObject).onClick += Settings;
 			UIEventListener.Get (mainMenuElements[2].gameObject).onClick += Credits;
 			UIEventListener.Get (mainMenuElements[3].gameObject).onClick += Quit;
-			UIEventListener.Get (mainMenuElements[4].gameObject).onClick += Menu;
+			//UIEventListener.Get (mainMenuElements[4].gameObject).onClick += Menu;
 			UIEventListener.Get (mainMenuElements[5].gameObject).onClick += Play;
 		}
 	}

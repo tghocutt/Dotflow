@@ -26,6 +26,6 @@ public class AudioManager : MonoBehaviour {
 
 	private void Start()
 	{
-		//music[0].Play();
+		music[0].Play();
 	}
 }
