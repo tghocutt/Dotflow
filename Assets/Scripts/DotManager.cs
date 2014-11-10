@@ -7,7 +7,7 @@ namespace Dotflow
 	public class DotManager : MonoBehaviour {
 
 		public ComplementManager complementManager;
-		//public GUIManager guiManager;
+
 		public ExplosionRenderer explosionRenderer;
 		public Main main; /* instance of the Main script (you can find it on the scripts folder), this is being used to figure out the screen size for the spawning */
 		public AudioManager audioManager; /* the object that holds all the audio and plays it */
@@ -188,10 +188,13 @@ namespace Dotflow
 				{
 					//medium complement
 					complementManager.ComplementPlayer(complementManager.GenerateComplent(2), ds[ds.Count-1].transform.position);
-				} else if (ds.Count > 7)
+				} else if (ds.Count > 7 && ds.Count < 9)
 				{
 					//big complement
 					complementManager.ComplementPlayer(complementManager.GenerateComplent(3), ds[ds.Count-1].transform.position);
+				} else if(ds.Count >= 9){
+					//massive
+					complementManager.ComplementPlayer(complementManager.GenerateComplent(4), ds[ds.Count-1].transform.position);
 				}
 				/* end of praise code */
 

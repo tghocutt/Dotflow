@@ -40,8 +40,7 @@ namespace Dotflow
 			{
 				Close (DeathMenuElements);
 				DotflowUIManager._dotManager.RestartGame();
-				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
-				DotflowUIManager.isMenuActive = false;
+				DotflowUIManager.boosterMenu.Open (DotflowUIManager.boosterMenu.boosterMenuElements);
 			}
 		}
 

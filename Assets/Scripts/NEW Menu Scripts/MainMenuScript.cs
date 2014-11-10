@@ -3,7 +3,6 @@ using System.Collections;
 
 namespace Dotflow
 {
-
 	public class MainMenuScript : DotflowMenu {
 
 		public DotflowElement[] mainMenuElements = new DotflowElement[0];
@@ -28,9 +27,7 @@ namespace Dotflow
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);
-				DotflowUIManager.isMenuActive = false;
-				DotflowUIManager._dotManager.RestartGame();
-				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
+				DotflowUIManager.boosterMenu.Open (DotflowUIManager.boosterMenu.boosterMenuElements);
 			}
 		}
 
@@ -77,9 +74,19 @@ namespace Dotflow
 		{
 			if (!DotflowUIManager.isMenuMoving) 
 			{
-				DotflowUIManager.isMenuActive = false;
 				Close (mainMenuElements);
-				DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
+				DotflowUIManager.boosterMenu.Open (DotflowUIManager.boosterMenu.boosterMenuElements);
+			}
+		}
+
+
+		//opens the store
+		private void Store(GameObject go)
+		{
+			if (!DotflowUIManager.isMenuMoving) 
+			{
+				Close (mainMenuElements);
+				DotflowUIManager.storeMenu.Open (DotflowUIManager.storeMenu.storeMenuElements);
 			}
 		}
 
@@ -105,6 +112,7 @@ namespace Dotflow
 			UIEventListener.Get (mainMenuElements[3].gameObject).onClick += Quit;
 			//UIEventListener.Get (mainMenuElements[4].gameObject).onClick += Menu;
 			UIEventListener.Get (mainMenuElements[5].gameObject).onClick += Play;
+			UIEventListener.Get (mainMenuElements[6].gameObject).onClick += Store;
 		}
 	}
 }

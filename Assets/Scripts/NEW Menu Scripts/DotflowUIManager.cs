@@ -12,12 +12,16 @@ namespace Dotflow
 		public CreditsMenuScript creditsMenuObj;
 		public DeathMenuScript deathMenuObj;
 		public HUDMenuScript HUDObj;
+		public StoreMenuScript StoreMenuObj;
+		public BoosterSelectMenuScript boosterSelectob;
 
 		public static MainMenuScript mainMenu;
 		public static SettingsMenuScript settingsMenu;
 		public static CreditsMenuScript creditsMenu;
 		public static DeathMenuScript deathMenu;
+		public static StoreMenuScript storeMenu;
 		public static HUDMenuScript HUD;
+		public static BoosterSelectMenuScript boosterMenu;
 		public static bool isMenuMoving = false;
 		public static bool isMenuActive = true;
 		public static DotManager _dotManager;
@@ -29,7 +33,8 @@ namespace Dotflow
 				!settingsMenuObj.childrenMoving &&
 				!creditsMenuObj.childrenMoving &&
 				!deathMenuObj.childrenMoving &&
-				!HUDObj.childrenMoving) 
+				!HUDObj.childrenMoving &&
+			    !StoreMenuObj.childrenMoving) 
 			{
 				isMenuMoving = false;
 			} else {
@@ -47,6 +52,8 @@ namespace Dotflow
 			creditsMenu = creditsMenuObj;
 			deathMenu = deathMenuObj;
 			HUD = HUDObj;
+			storeMenu = StoreMenuObj;
+			boosterMenu = boosterSelectob;
 			_dotManager = dotManager;
 		}
 	}
