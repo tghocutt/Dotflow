@@ -276,6 +276,9 @@ namespace Dotflow
 								if (!dot.isPowerup && lineColor == Color.white)
 									lineColor = dot.color;
 
+								if(dot.isPowerup)dot.background.color = lineColor;
+								
+
 								dotsInLine.Add(dot);
 								listOfLineVertices.Add(dot.transform);
 								if(dotsInLine.Count < audioManager.dotsConnecting.Length)
@@ -343,10 +346,19 @@ namespace Dotflow
 					//Time.timeScale = 0.1f;
 					//guiManager.deathMenuRoot.SetActive(true);
 					//guiManager.guiActive = true;
+					foreach(Obstacle ob in obstacleManager.obstacles)
+					{
+						Destroy (ob.gameObject);
+					}
+					obstacleManager.obstacles = new List<Obstacle>();
 
 					StartCoroutine(OpenDeathMenu());
 
 				} else {
+					foreach(Dot dot in allDots)
+					{
+						if(dot.isPowerup) dot.background.color = Color.white;
+					}
 					livesClass.RemoveLife();
 					audioManager.soundFX[2].Play();
 					ClearLine();
@@ -371,10 +383,19 @@ namespace Dotflow
 				//Time.timeScale = 0.1f;
 				//guiManager.deathMenuRoot.SetActive(true);
 				//guiManager.guiActive = true;
-				
+				foreach(Obstacle ob in obstacleManager.obstacles)
+				{
+					Destroy (ob.gameObject);
+				}
+				obstacleManager.obstacles = new List<Obstacle>();
+
 				StartCoroutine(OpenDeathMenu());
 				
 			} else {
+				foreach(Dot dot in allDots)
+				{
+					if(dot.isPowerup) dot.background.color = Color.white;
+				}
 				livesClass.RemoveLife();
 				audioManager.soundFX[2].Play();
 				ClearLine();
