@@ -12,9 +12,10 @@ namespace Dotflow
 		private void Update()
 		{
 			grid = gameObject.GetComponentInParent<UIGrid> ();
-
-			dragDropContainer.reparentTarget = grid.transform;
+			if (grid) 
+			{
+				dragDropContainer.reparentTarget = grid.transform;
+			}
 		}
-
 	}
 }

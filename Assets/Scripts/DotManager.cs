@@ -15,6 +15,8 @@ namespace Dotflow
 		public GUIText debugText;
 		public PowerupManager powerupManager;
 
+		public ObstacleManager obstacleManager;
+
 		public int score;
 		private float scoreMultiplier = 1; /* for the score powerup */
 
@@ -138,6 +140,8 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
+
+
 			if (amountOfDotColors < 3) /* the game starts with 1 color, and adds the other 2 after the first 2 lines, after that it proceeds as normal */
 				amountOfDotColors++;
 
@@ -147,6 +151,7 @@ namespace Dotflow
 				if (currentLevel % everyXlevelsAddColor == 0 && amountOfDotColors < arrayOfDotColors.Length) /* one new color every 2 levels, unless there are no more new colors to add */
 					amountOfDotColors++;
 
+				obstacleManager.SpawnObstacle ();
 				StartCoroutine(startShrinking()); /* the intention is to have this shrink the dots to make it harder, but turn down the other difficulty knobs */
 			}
 
@@ -321,10 +326,10 @@ namespace Dotflow
 			}
 		}
 
-		public void CollisionWithLine (Dot collidedDot)
+		public void CollisionWithLine (Dot collidedDot = null)
 		{
-			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && lineColor != Color.white){
-
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && lineColor != Color.white)
+			{
 				if(livesClass.currentLives == 0)
 				{
 					ClearLine();
@@ -347,6 +352,33 @@ namespace Dotflow
 					ClearLine();
 					lineBeingDrawn = false;
 				}
+			}
+		}
+
+		public void CollisionWithObstacle (Obstacle collidedObstacle = null)
+		{
+			Debug.Log ("Colliding");
+			if(livesClass.currentLives == 0)
+			{
+				ClearLine();
+				
+				/* highscore setting */
+				if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
+				PlayerPrefs.Save();
+				
+				livesClass.SetLifeTotal(0);
+				audioManager.soundFX[2].Play();
+				//Time.timeScale = 0.1f;
+				//guiManager.deathMenuRoot.SetActive(true);
+				//guiManager.guiActive = true;
+				
+				StartCoroutine(OpenDeathMenu());
+				
+			} else {
+				livesClass.SetLifeTotal(livesClass.currentLives - 1);
+				audioManager.soundFX[2].Play();
+				ClearLine();
+				lineBeingDrawn = false;
 			}
 		}
 
