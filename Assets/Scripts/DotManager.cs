@@ -338,7 +338,7 @@ namespace Dotflow
 					if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
 					PlayerPrefs.Save();
 						
-					livesClass.SetLifeTotal(0);
+					//livesClass.SetLifeTotal(0);
 					audioManager.soundFX[2].Play();
 					//Time.timeScale = 0.1f;
 					//guiManager.deathMenuRoot.SetActive(true);
@@ -347,7 +347,7 @@ namespace Dotflow
 					StartCoroutine(OpenDeathMenu());
 
 				} else {
-					livesClass.SetLifeTotal(livesClass.currentLives - 1);
+					livesClass.RemoveLife();
 					audioManager.soundFX[2].Play();
 					ClearLine();
 					lineBeingDrawn = false;
@@ -366,7 +366,7 @@ namespace Dotflow
 				if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
 				PlayerPrefs.Save();
 				
-				livesClass.SetLifeTotal(0);
+				//livesClass.SetLifeTotal(0);
 				audioManager.soundFX[2].Play();
 				//Time.timeScale = 0.1f;
 				//guiManager.deathMenuRoot.SetActive(true);
@@ -375,7 +375,7 @@ namespace Dotflow
 				StartCoroutine(OpenDeathMenu());
 				
 			} else {
-				livesClass.SetLifeTotal(livesClass.currentLives - 1);
+				livesClass.RemoveLife();
 				audioManager.soundFX[2].Play();
 				ClearLine();
 				lineBeingDrawn = false;
@@ -390,7 +390,12 @@ namespace Dotflow
 			dotCount = 0;
 			score = 0;
 			scoreLabel.text = score.ToString();
-			livesClass.SetLifeTotal (startingLives);
+
+			for(int i = 0; i < startingLives; i++)
+			{
+				livesClass.AddLife ();
+			}
+
 			currentLevel = 1;
 			amountOfDotColors = 1;
 			currentMaxDots = startingAmountDots;
@@ -413,7 +418,11 @@ namespace Dotflow
 		{
 			if (!PlayerPrefs.HasKey ("highScore")) PlayerPrefs.SetInt ("highScore", 0);
 
-			livesClass.SetLifeTotal (startingLives);
+			for(int i = 0; i < startingLives; i++)
+			{
+				livesClass.AddLife ();
+			}
+
 			currentMaxDots = startingAmountDots;
 			spawnSize = startingSpawnSize;
 			for (int i = 0; i < maxAmountDots; i++)

@@ -13,20 +13,12 @@ namespace Dotflow{
 			Obstacle obstacle = other.gameObject.GetComponent<Obstacle> ();
 			if (tempDot != null) 
 			{
-				Debug.Log ("1");
 				tempDot.dotManager.CollisionWithLine (tempDot);
 			} else {
 				if(obstacle != null) {
-					Debug.Log ("2");
 					obstacle.dotManager.CollisionWithObstacle(obstacle);
 				}
 			}
-
-		}
-
-
-		void OnCollisionEnter2D(Collision2D other)
-		{
 
 		}
 

@@ -56,7 +56,7 @@ namespace Dotflow
 			int lifeTotal = dot.dotManager.livesClass.currentLives;
 			if(lifeTotal < dot.dotManager.livesClass.maxLives)
 			{
-				dot.dotManager.livesClass.SetLifeTotal(lifeTotal + 1);
+				dot.dotManager.livesClass.AddLife();
 			}
 		}
 
