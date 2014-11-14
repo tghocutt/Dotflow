@@ -11,6 +11,7 @@ namespace Dotflow
 		public int id;
 		public bool isPowerup;
 		public UIAnchor anchor;
+		public SpriteRenderer background;
 
 		[HideInInspector]
 		public Color color;

@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: d3c46028dd736441b8bc14756a201375
+guid: 9338db55c784efc4e8ddbbdb7cf4a011
 TextureImporter:
   fileIDToRecycleName:
-    21300000: slider_white
+    21300000: powerupt_boost
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
