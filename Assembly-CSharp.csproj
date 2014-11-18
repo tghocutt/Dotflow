@@ -56,12 +56,10 @@
      <Compile Include="Assets\Scripts\LineManager.cs" />
      <Compile Include="Assets\Scripts\Main.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\CreditsMenu.cs" />
-     <Compile Include="Assets\Scripts\Menu Scripts\DeathMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\FrontCreditsMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\FrontMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\FrontSettingsMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\Lives.cs" />
-     <Compile Include="Assets\Scripts\Menu Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\ScoreReadout.cs" />
      <Compile Include="Assets\Scripts\Menu Scripts\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\MouseFollow.cs" />
