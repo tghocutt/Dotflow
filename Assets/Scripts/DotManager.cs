@@ -53,6 +53,7 @@ namespace Dotflow
 		public PowerupController[] dotPowerupPrefabs; /* the only power up prefab */
 
 		public Color[] arrayOfDotColors; /* holds all dot colors that should be in the game, the order is important, since not all colors are going to be used from the start */
+		public string[] arrayOfColorTags; /* holds all the tags that colors can be - tags are correlated with colors and all colored objects should be tagged */
 
 		public List<Dot> allDots = new List<Dot>(); /* list containing all dot objects that exist */
 		public List<Dot> dotsInLine = new List<Dot> (); /* list containing all dot objects currently forming the line, in order of connection */
@@ -131,6 +132,7 @@ namespace Dotflow
 		GameObject activateNewDot(int dotPosition) { /* takes the first inactive dot on the list, randomizes a new color for it, activates it, and returns it's gameObject */
 			int randy = Mathf.RoundToInt (Random.Range (0, amountOfDotColors));
 			allDots[dotPosition].SetColor(arrayOfDotColors[randy]);
+			allDots[dotPosition].tag = arrayOfColorTags[randy];
 			GameObject dotObject = allDots[dotPosition].gameObject;
 			dotObject.SetActive(true);
 			return dotObject;
@@ -266,13 +268,18 @@ namespace Dotflow
 
 				foreach(RaycastHit2D h in hits)
 				{
+					Debug.Log (h.collider.name);
 					if(h.collider.gameObject.layer == 9)
 					{
+						Debug.Log ("layer is not the issue");
 						if(!dotsInLine.Contains(h.collider.GetComponentInParent<Dot>()))
 						{
+
 							Dot dot = h.collider.GetComponentInParent<Dot>();
-							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup)
+							Debug.Log("dot name is " + dot.name);
+							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == dotsInLine[0].tag)
 							{
+								Debug.Log ("we even get this far");
 								if (!dot.isPowerup && lineColor == Color.white)
 									lineColor = dot.color;
 
@@ -324,14 +331,16 @@ namespace Dotflow
 				//Debug.Log ("current max dots: " + currentMaxDots + " | dot count: " + dotCount);
 				//if(currentMaxDots > dotCount)
 				//{
-			//		StartCoroutine(SpawnDot());
+			    //StartCoroutine(SpawnDot());
 				//}
 			}
 		}
 
 		public void CollisionWithLine (Dot collidedDot = null)
 		{
-			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && lineColor != Color.white)
+			Debug.Log ("collided dot color : " + collidedDot.color.ToString () + "line color : " + lineColor);
+			Debug.Log ("collided dot color tag : " + collidedDot.tag + "line color tag : " + dotsInLine [0].tag);
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && dotsInLine[0].tag != "powerup" && lineColor != Color.white)
 			{
 				if(livesClass.currentLives == 0)
 				{
@@ -369,7 +378,6 @@ namespace Dotflow
 
 		public void CollisionWithObstacle (Obstacle collidedObstacle = null)
 		{
-			Debug.Log ("Colliding");
 			if(livesClass.currentLives == 0)
 			{
 				ClearLine();

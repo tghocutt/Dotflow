@@ -10,15 +10,16 @@ namespace Dotflow{
 		void OnTriggerEnter2D(Collider2D other){
 
 			Dot tempDot = other.gameObject.GetComponent<Dot> ();
-			Obstacle obstacle = other.gameObject.GetComponent<Obstacle> ();
-			if (tempDot != null) 
+			tempDot.dotManager.CollisionWithLine (tempDot);
+			//Obstacle obstacle = other.gameObject.GetComponent<Obstacle> ();
+			/*if (tempDot != null) 
 			{
 				tempDot.dotManager.CollisionWithLine (tempDot);
 			} else {
 				if(obstacle != null) {
-					obstacle.dotManager.CollisionWithObstacle(obstacle);
+					//obstacle.dotManager.CollisionWithObstacle(obstacle);
 				}
-			}
+			}*/
 
 		}
 

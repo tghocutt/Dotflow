@@ -9,11 +9,12 @@ namespace Dotflow
 		public bool clickedOrDetected;
 		public DotManager dotManager;
 		public int id;
+		public string tag;
 		public bool isPowerup;
 		public UIAnchor anchor;
 		public SpriteRenderer background;
 
-		[HideInInspector]
+		//[HideInInspector]
 		public Color color;
 
 		public void Draw(GameObject go)
@@ -33,6 +34,7 @@ namespace Dotflow
 			//dotManager.allDots.Add(this);
 
 			id = this.GetInstanceID ();
+
 		}
 
 //		void Update () {
