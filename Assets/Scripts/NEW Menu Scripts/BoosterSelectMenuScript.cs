@@ -36,7 +36,7 @@ namespace Dotflow
 		{
 			if (!DotflowUIManager.isMenuMoving) 
 			{
-				DotflowUIManager._dotManager.RestartGame();
+				//DotflowUIManager._dotManager.RestartGame();
 				Close (boosterMenuElements);
 				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);
 			}
