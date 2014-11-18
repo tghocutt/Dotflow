@@ -20,7 +20,7 @@ namespace Dotflow
 			Obstacle ob = go.GetComponent<Obstacle> ();
 			Dot dot = go.GetComponent<Dot> ();
 			ob.dotManager = dotManager;
-			ColorPicker (dot, ob.tag);
+			//ColorPicker (dot, ob.tag);
 			obstacles.Add (ob);
 			go.transform.parent = transform.parent;
 			go.transform.localPosition = new Vector3 (spawnPos.x, spawnPos.y, 0f);

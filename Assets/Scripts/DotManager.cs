@@ -219,6 +219,9 @@ namespace Dotflow
 						newDot.SetActive(false);
 
 						Destroy(d.gameObject);
+					} else if(d.isObstacle){
+						d.GetComponent<Obstacle>().FillDots(ds);
+						ClearLine();
 					} else {
 						d.gameObject.SetActive(false); /* deactivates the dot's game object */
 						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
@@ -266,18 +269,18 @@ namespace Dotflow
 
 				foreach(RaycastHit2D h in hits)
 				{
-					Debug.Log (h.collider.name);
+					//Debug.Log (h.collider.name);
 					if(h.collider.gameObject.layer == 9)
 					{
-						Debug.Log ("layer is not the issue");
+						//Debug.Log ("layer is not the issue");
 						if(!dotsInLine.Contains(h.collider.GetComponentInParent<Dot>()))
 						{
 
 							Dot dot = h.collider.GetComponentInParent<Dot>();
 							Debug.Log("dot name is " + dot.name);
-							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == dotsInLine[0].tag)
+							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == dotsInLine[0].tag || dot.isObstacle)
 							{
-								Debug.Log ("we even get this far");
+								//Debug.Log ("we even get this far");
 								if (!dot.isPowerup && lineColor == Color.white)
 									lineColor = dot.color;
 
@@ -292,6 +295,8 @@ namespace Dotflow
 								} else {
 									audioManager.dotsConnecting[audioManager.dotsConnecting.Length - 1].Play();
 								}
+
+								if(dot.isObstacle) DestroyDots(dotsInLine);
 							}
 						}
 					}
@@ -336,9 +341,7 @@ namespace Dotflow
 
 		public void CollisionWithLine (Dot collidedDot = null)
 		{
-			Debug.Log ("collided dot color : " + collidedDot.color.ToString () + "line color : " + lineColor);
-			Debug.Log ("collided dot color tag : " + collidedDot.tag + "line color tag : " + dotsInLine [0].tag);
-			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && dotsInLine[0].tag != "powerup" && lineColor != Color.white)
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && dotsInLine[0].tag != "powerup" && lineColor != Color.white && !collidedDot.isObstacle)
 			{
 				if(livesClass.currentLives == 0)
 				{
@@ -371,41 +374,6 @@ namespace Dotflow
 					ClearLine();
 					lineBeingDrawn = false;
 				}
-			}
-		}
-
-		public void CollisionWithObstacle (Obstacle collidedObstacle = null)
-		{
-			if(livesClass.currentLives == 0)
-			{
-				ClearLine();
-				
-				/* highscore setting */
-				if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
-				PlayerPrefs.Save();
-				
-				//livesClass.SetLifeTotal(0);
-				audioManager.soundFX[2].Play();
-				//Time.timeScale = 0.1f;
-				//guiManager.deathMenuRoot.SetActive(true);
-				//guiManager.guiActive = true;
-				foreach(Obstacle ob in obstacleManager.obstacles)
-				{
-					Destroy (ob.gameObject);
-				}
-				obstacleManager.obstacles = new List<Obstacle>();
-
-				StartCoroutine(OpenDeathMenu());
-				
-			} else {
-				foreach(Dot dot in allDots)
-				{
-					if(dot.isPowerup) dot.background.color = Color.white;
-				}
-				livesClass.RemoveLife();
-				audioManager.soundFX[2].Play();
-				ClearLine();
-				lineBeingDrawn = false;
 			}
 		}
 

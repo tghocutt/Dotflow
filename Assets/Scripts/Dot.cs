@@ -14,6 +14,8 @@ namespace Dotflow
 		public UIAnchor anchor;
 		public SpriteRenderer background;
 
+		public bool isObstacle;
+
 		//[HideInInspector]
 		public Color color;
 
