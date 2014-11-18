@@ -44,6 +44,18 @@ namespace Dotflow
 			}
 		}
 
+		private void UseLifeGem(GameObject go) {
+			if (!DotflowUIManager.isMenuMoving) 
+			{
+				if (PlayerPrefs.GetInt("lifeGem") > 0) {
+					DotflowUIManager._dotManager.LifeGemUsed();
+					Close (DeathMenuElements);
+					DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
+				}else {
+					//TODO:Tell the player he has no more life gems?
+				}
+			}
+		}
 
 		private void Update()
 		{

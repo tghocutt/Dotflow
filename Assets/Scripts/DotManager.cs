@@ -142,8 +142,6 @@ namespace Dotflow
 		//increases the difficulty of the game
 		public void IncreaseDifficulty()
 		{
-
-
 			if (amountOfDotColors < 3) /* the game starts with 1 color, and adds the other 2 after the first 2 lines, after that it proceeds as normal */
 				amountOfDotColors++;
 
@@ -432,6 +430,20 @@ namespace Dotflow
 			spawnSize = startingSpawnSize;
 		}
 
+		public void LifeGemUsed() {
+			for(int i = 0; i < maxLives; i++) { //gives the player max amount of lives
+				livesClass.AddLife();
+			}
+			/* pushes the game back a single level */
+			currentLevel--;
+			dotCurrentSpeed = dotSlowestSpeed;
+			spawnSize += dotShrinkAmount;
+			currentMaxDots -= 10;
+
+			//TODO: LOWER LIFE GEM COUNT, CURRENTLY DOESN'T FOR TESTING PURPOSES
+			//PlayerPrefs.SetInt ("lifeGem", PlayerPrefs.GetInt ("lifeGem") - 1);
+			//TODO: Call 'life gem used' animation here?
+		}
 
 		private IEnumerator OpenDeathMenu()
 		{

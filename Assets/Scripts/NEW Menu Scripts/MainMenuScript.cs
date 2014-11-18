@@ -106,6 +106,9 @@ namespace Dotflow
 
 		//adds listeners to the appropriate dotflow elements
 		private void Start () {
+			if (!PlayerPrefs.HasKey("lifeGem"))
+				PlayerPrefs.SetInt("lifeGem",5);
+
 			UIEventListener.Get (mainMenuElements[0].gameObject).onClick += Back;
 			UIEventListener.Get (mainMenuElements[1].gameObject).onClick += Settings;
 			UIEventListener.Get (mainMenuElements[2].gameObject).onClick += Credits;
