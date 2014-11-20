@@ -28,7 +28,7 @@ namespace Dotflow
 		{
 			if(currentLives < 5)
 			{
-//				Debug.Log (currentLives+1 + "");
+
 				StartCoroutine(GrowLife(lives[currentLives]));
 				currentLives++;
 			}
@@ -39,8 +39,9 @@ namespace Dotflow
 		{
 			if(currentLives > 0)
 			{
-				StartCoroutine(ShrinkLife(lives[currentLives]));
 				currentLives--;
+				StartCoroutine(ShrinkLife(lives[currentLives]));
+
 			}
 		}
 

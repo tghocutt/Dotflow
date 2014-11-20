@@ -224,6 +224,10 @@ namespace Dotflow
 						d.GetComponent<Obstacle>().FillDots(ds);
 						break;
 						//ClearLine();
+					}else if(d.tag == "gem")
+					{
+						PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
+						gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
 					} else {
 						d.gameObject.SetActive(false); /* deactivates the dot's game object */
 						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
@@ -280,17 +284,28 @@ namespace Dotflow
 
 							Dot dot = h.collider.GetComponentInParent<Dot>();
 							Debug.Log("dot name is " + dot.name);
-							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == dotsInLine[0].tag || dot.tag == "gem")// || dot.isObstacle)
+							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == "gem")//dot.tag == dotsInLine[0].tag || dot.tag == "gem")// || dot.isObstacle)
 							{
 								//Debug.Log ("we even get this far");
 								if (!dot.isPowerup && lineColor == Color.white)
 									lineColor = dot.color;
 
-								if(dot.isPowerup)dot.background.color = lineColor;
+
 								
 
 								dotsInLine.Add(dot);
 								listOfLineVertices.Add(dot.transform);
+
+								if(dot.isPowerup)
+								{
+									dot.background.color = lineColor;
+								}
+
+								if(dotsInLine.Count > 1 && dotsInLine[0].isPowerup)
+								{
+									dotsInLine[0].background.color = dot.color;
+								}
+
 								if(dotsInLine.Count < audioManager.dotsConnecting.Length)
 								{
 									audioManager.dotsConnecting[dotsInLine.Count - 1].Play();
@@ -298,11 +313,7 @@ namespace Dotflow
 									audioManager.dotsConnecting[audioManager.dotsConnecting.Length - 1].Play();
 								}
 
-								if(dot.tag == "gem")
-								{
-									PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
-									gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
-								}
+
 								//if(dot.isObstacle) DestroyDots(dotsInLine);
 							} else if (dot.isObstacle) {
 
@@ -414,7 +425,7 @@ namespace Dotflow
 
 		public void CollisionWithLine (Dot collidedDot = null)
 		{
-			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && dotsInLine[0].tag != "powerup" && lineColor != Color.white && !collidedDot.isObstacle && collidedDot.tag != "gem")
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && lineColor != Color.white && !collidedDot.isObstacle && collidedDot.tag != "gem")
 			{
 				if(livesClass.currentLives == 0)
 				{

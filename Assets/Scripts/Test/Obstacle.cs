@@ -86,6 +86,15 @@ namespace Dotflow
 				Dot dot = go.GetComponent<Dot>();
 
 				dot.dotManager = dotManager;
+
+				for(int i = 0; i < dotManager.obstacleManager.obstacles.Count; i++)
+				{
+					if(dotManager.obstacleManager.obstacles[i].GetInstanceID() == this.GetInstanceID())
+					{
+						dotManager.obstacleManager.obstacles.RemoveAt(i);
+					}
+				}
+
 				Destroy (this.gameObject);
 			}
 		}
