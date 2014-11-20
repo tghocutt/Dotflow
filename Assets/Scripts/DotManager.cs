@@ -21,6 +21,7 @@ namespace Dotflow
 		private float scoreMultiplier = 1; /* for the score powerup */
 
 		public UILabel scoreLabel;
+		public UILabel gemLabel;
 
 		public int startingLives = 3;
 		public int maxLives = 5;
@@ -221,7 +222,8 @@ namespace Dotflow
 						Destroy(d.gameObject);
 					} else if(d.isObstacle){
 						d.GetComponent<Obstacle>().FillDots(ds);
-						ClearLine();
+						break;
+						//ClearLine();
 					} else {
 						d.gameObject.SetActive(false); /* deactivates the dot's game object */
 						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
@@ -278,7 +280,7 @@ namespace Dotflow
 
 							Dot dot = h.collider.GetComponentInParent<Dot>();
 							Debug.Log("dot name is " + dot.name);
-							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == dotsInLine[0].tag || dot.isObstacle)
+							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == dotsInLine[0].tag || dot.tag == "gem")// || dot.isObstacle)
 							{
 								//Debug.Log ("we even get this far");
 								if (!dot.isPowerup && lineColor == Color.white)
@@ -296,7 +298,43 @@ namespace Dotflow
 									audioManager.dotsConnecting[audioManager.dotsConnecting.Length - 1].Play();
 								}
 
-								if(dot.isObstacle) DestroyDots(dotsInLine);
+								if(dot.tag == "gem")
+								{
+									PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
+									gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
+								}
+								//if(dot.isObstacle) DestroyDots(dotsInLine);
+							} else if (dot.isObstacle) {
+
+								dotsInLine.Add(dot);
+								listOfLineVertices.Add(dot.transform);
+
+								if(dotsInLine.Count < audioManager.dotsConnecting.Length)
+								{
+									audioManager.dotsConnecting[dotsInLine.Count - 1].Play();
+								} else {
+									audioManager.dotsConnecting[audioManager.dotsConnecting.Length - 1].Play();
+								}
+
+								Debug.Log ("made it this far");
+								Obstacle obstacle = dot.GetComponent<Obstacle>();
+								bool accepted = false;
+
+								for(int i = 0; i < obstacle.actualColorTags.Length; i++)
+								{
+									if(obstacle.filled[i] == false && dotsInLine[0].tag == obstacle.actualColorTags[i])
+									{
+										accepted = true;
+										break;
+									}
+								}
+								Debug.Log (accepted);
+								if(accepted)
+								{
+									DestroyDots(dotsInLine);
+								} else {
+									ForceCollision();
+								}
 							}
 						}
 					}
@@ -339,9 +377,44 @@ namespace Dotflow
 			}
 		}
 
+
+		public void ForceCollision()
+		{
+			if(livesClass.currentLives == 0)
+			{
+				ClearLine();
+				
+
+				if (PlayerPrefs.HasKey("highScore") && score > PlayerPrefs.GetInt("highScore"))	PlayerPrefs.SetInt("highScore",score);
+				PlayerPrefs.Save();
+				
+
+				audioManager.soundFX[2].Play();
+
+				foreach(Obstacle ob in obstacleManager.obstacles)
+				{
+					Destroy (ob.gameObject);
+				}
+				obstacleManager.obstacles = new List<Obstacle>();
+				
+				StartCoroutine(OpenDeathMenu());
+				
+			} else {
+				foreach(Dot dot in allDots)
+				{
+					if(dot.isPowerup) dot.background.color = Color.white;
+				}
+				livesClass.RemoveLife();
+				audioManager.soundFX[2].Play();
+				ClearLine();
+				lineBeingDrawn = false;
+			}
+		}
+
+
 		public void CollisionWithLine (Dot collidedDot = null)
 		{
-			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && dotsInLine[0].tag != "powerup" && lineColor != Color.white && !collidedDot.isObstacle)
+			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && dotsInLine[0].tag != "powerup" && lineColor != Color.white && !collidedDot.isObstacle && collidedDot.tag != "gem")
 			{
 				if(livesClass.currentLives == 0)
 				{
@@ -441,6 +514,9 @@ namespace Dotflow
 				newDot.transform.parent = dotContainer.transform;
 				newDot.SetActive(false);
 			}
+
+			PlayerPrefs.SetInt ("gemTotal", 5);
+			gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
 		}
 	}
 }

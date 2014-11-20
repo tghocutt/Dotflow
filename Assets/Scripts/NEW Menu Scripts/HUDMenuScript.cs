@@ -8,7 +8,7 @@ namespace Dotflow
 
 		public DotflowElement[] hudElements = new DotflowElement[0];
 		public bool childrenMoving = false;
-
+		//public UILabel gemTotal;
 
 		public override void Open(DotflowElement[] elements)
 		{
