@@ -33,8 +33,6 @@ namespace Dotflow
 
 			color = GetComponent<SpriteRenderer>().color;
 
-			//dotManager.allDots.Add(this);
-
 			id = this.GetInstanceID ();
 
 		}

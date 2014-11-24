@@ -220,14 +220,16 @@ namespace Dotflow
 						newDot.SetActive(false);
 
 						Destroy(d.gameObject);
+
+						//if(d.tag == "gem")
+						//{
+					//		PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
+					//		gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
+					//	}
 					} else if(d.isObstacle){
 						d.GetComponent<Obstacle>().FillDots(ds);
 						break;
 						//ClearLine();
-					}else if(d.tag == "gem")
-					{
-						PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
-						gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
 					} else {
 						d.gameObject.SetActive(false); /* deactivates the dot's game object */
 						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
@@ -499,6 +501,7 @@ namespace Dotflow
 
 		private IEnumerator OpenDeathMenu()
 		{
+			ClearLine ();
 			yield return new WaitForEndOfFrame ();
 
 			DotflowUIManager.isMenuActive = true;
