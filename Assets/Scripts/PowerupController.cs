@@ -6,7 +6,7 @@ namespace Dotflow
 {
 	public class PowerupController : MonoBehaviour {
 
-		public enum Powerups : byte {ScoreMultiplier=1, ExtraLife, TimeSlow, TimeFreeze};
+		public enum Powerups : byte {ScoreMultiplier=1, ExtraLife, TimeSlow, TimeFreeze, LifeGem};
 		public Powerups typeofPowerup;
 		public float powerupChanceWeight; /* from 0 to 1, what's the % chance that this powerup shows up instead any other */
 
@@ -33,6 +33,10 @@ namespace Dotflow
 
 				case Powerups.TimeFreeze:
 					PowerTimeFreeze();
+					break;
+
+				case Powerups.LifeGem:
+					PowerLifeGem();
 					break;
 
 				default:
@@ -83,7 +87,13 @@ namespace Dotflow
 //				powerupManager.SlowTimeGo (0.01f);
 //			}
 		}
-	
+
+		void PowerLifeGem()
+		{
+			PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
+			Debug.Log (PlayerPrefs.GetInt ("gemTotal"));
+			powerupManager.dotManager.gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
+		}
 
 		void OnDestroy() 
 		{

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -224,10 +224,6 @@ namespace Dotflow
 						d.GetComponent<Obstacle>().FillDots(ds);
 						break;
 						//ClearLine();
-					}else if(d.tag == "gem")
-					{
-						PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
-						gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
 					} else {
 						d.gameObject.SetActive(false); /* deactivates the dot's game object */
 						allDots.Add(d); /* and this puts the 'destroyed' dot at the end of the list, where it will be reused */
@@ -283,15 +279,12 @@ namespace Dotflow
 						{
 
 							Dot dot = h.collider.GetComponentInParent<Dot>();
-							Debug.Log("dot name is " + dot.name);
+							//Debug.Log("dot name is " + dot.name);
 							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == "gem")//dot.tag == dotsInLine[0].tag || dot.tag == "gem")// || dot.isObstacle)
 							{
 								//Debug.Log ("we even get this far");
 								if (!dot.isPowerup && lineColor == Color.white)
-									lineColor = dot.color;
-
-
-								
+									lineColor = dot.color;							
 
 								dotsInLine.Add(dot);
 								listOfLineVertices.Add(dot.transform);
@@ -499,6 +492,7 @@ namespace Dotflow
 
 		private IEnumerator OpenDeathMenu()
 		{
+			ClearLine ();
 			yield return new WaitForEndOfFrame ();
 
 			DotflowUIManager.isMenuActive = true;
