@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -285,15 +285,12 @@ namespace Dotflow
 						{
 
 							Dot dot = h.collider.GetComponentInParent<Dot>();
-							Debug.Log("dot name is " + dot.name);
+							//Debug.Log("dot name is " + dot.name);
 							if (lineColor == Color.white || lineColor == dot.color || dot.isPowerup || dot.tag == "gem")//dot.tag == dotsInLine[0].tag || dot.tag == "gem")// || dot.isObstacle)
 							{
 								//Debug.Log ("we even get this far");
 								if (!dot.isPowerup && lineColor == Color.white)
-									lineColor = dot.color;
-
-
-								
+									lineColor = dot.color;							
 
 								dotsInLine.Add(dot);
 								listOfLineVertices.Add(dot.transform);
