@@ -118,7 +118,7 @@ namespace Dotflow
 			int i = 0;
 			foreach(Transform transform in slotPositions)
 			{
-				int randy = Mathf.FloorToInt(Random.Range(0, possibleSlotColors.Length));
+				int randy = Mathf.FloorToInt(Random.Range(0, dotManager.amountOfDotColors));
 				GameObject go = Instantiate (slotPrefab) as GameObject;
 
 				go.transform.parent = slotPositions[i].transform;
@@ -149,6 +149,8 @@ namespace Dotflow
 			}
 
 			dot.dotManager = dotManager;
+			possibleSlotColors = dotManager.arrayOfDotColors;
+
 			CraftObstacle ();
 		}
 	}

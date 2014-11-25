@@ -51,6 +51,7 @@ namespace Dotflow {
 					listOfColliders[i].spriteRenderer.enabled = true;
 					listOfColliders[i].boxCollider.enabled = true;
 				} else {
+					//Debug.Log(i + " line deactivated");
 					listOfColliders[i].spriteRenderer.enabled = false;
 					listOfColliders[i].boxCollider.enabled = false;
 				}
