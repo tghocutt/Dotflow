@@ -67,7 +67,7 @@ namespace Dotflow
 
 		public float startingSpawnSize;
 		private float spawnSize = 1.0f; /* starting size for the dots, in terms of unity scale */
-		private int amountOfDotColors = 1; /* how many different dot colors are there currently in the game */
+		public int amountOfDotColors = 1; /* how many different dot colors are there currently in the game */
 		private int everyXlevelsAddColor = 2; /* adds a new color every X levels/shrinkings */
 
 		private PowerupController pc;
@@ -363,8 +363,8 @@ namespace Dotflow
 			if (!DotflowUIManager.isMenuActive) { /* stops in-game user input when the UI is active */
 
 				if (Input.GetMouseButtonDown (0)) {
-						lineBeingDrawn = true;
-						audioManager.soundFX [1].Play ();
+					lineBeingDrawn = true;
+					audioManager.soundFX [1].Play ();
 				}
 
 				if (Input.GetMouseButtonUp (0)) {
@@ -426,6 +426,7 @@ namespace Dotflow
 		{
 			if (dotsInLine.Count > 0 && !collidedDot.isPowerup && collidedDot.color != lineColor && collidedDot.tag != dotsInLine[0].tag && lineColor != Color.white && !collidedDot.isObstacle && collidedDot.tag != "gem")
 			{
+				lineBeingDrawn = false;
 				if(livesClass.currentLives == 0)
 				{
 					ClearLine();
@@ -463,6 +464,7 @@ namespace Dotflow
 		public void RestartGame() {
 			foreach (Dot d in allDots) {
 				d.gameObject.SetActive(false); //setting all dots to be inactive
+				d.color = Color.white;
 			}
 
 			dotCount = 0;
@@ -499,7 +501,11 @@ namespace Dotflow
 		private IEnumerator OpenDeathMenu()
 		{
 			ClearLine ();
+<<<<<<< HEAD
 			yield return new WaitForSeconds (0.1f);
+=======
+			yield return new WaitForEndOfFrame();
+>>>>>>> origin/iago-coding
 
 			DotflowUIManager.isMenuActive = true;
 			DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
