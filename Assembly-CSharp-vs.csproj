@@ -260,7 +260,7 @@
      <None Include="Assets\Shared\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\Shared\NGUI\Examples\Resources\Localization.txt" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/Iago/Desktop/Dotflow/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/TSI25/Documents/GitHub/NEWDotflowRepository/Dotflow/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>

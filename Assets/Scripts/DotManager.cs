@@ -499,7 +499,7 @@ namespace Dotflow
 		private IEnumerator OpenDeathMenu()
 		{
 			ClearLine ();
-			yield return new WaitForEndOfFrame ();
+			yield return new WaitForSeconds (0.1f);
 
 			DotflowUIManager.isMenuActive = true;
 			DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
