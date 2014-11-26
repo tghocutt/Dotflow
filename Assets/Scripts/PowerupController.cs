@@ -49,6 +49,7 @@ namespace Dotflow
 		private void Start()
 		{
 			dot = gameObject.GetComponent<Dot> () as Dot;
+			powerupManager = dot.dotManager.powerupManager;
 		}
 
 		void PowerScoreMultiplier() {
