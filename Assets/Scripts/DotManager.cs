@@ -501,11 +501,11 @@ namespace Dotflow
 		private IEnumerator OpenDeathMenu()
 		{
 			ClearLine ();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 			yield return new WaitForSeconds (0.1f);
-=======
+//=======
 			yield return new WaitForEndOfFrame();
->>>>>>> origin/iago-coding
+//>>>>>>> origin/iago-coding
 
 			DotflowUIManager.isMenuActive = true;
 			DotflowUIManager.HUD.Close(DotflowUIManager.HUD.hudElements);
