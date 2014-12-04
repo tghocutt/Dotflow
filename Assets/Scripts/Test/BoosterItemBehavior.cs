@@ -9,12 +9,15 @@ namespace Dotflow
 
 		public UIDragDropContainer dragDropContainer;
 
+		public int cost;
+		public bool selected;
+
 		private void Update()
 		{
 			grid = gameObject.GetComponentInParent<UIGrid> ();
-			if (grid) 
+			if (grid)
 			{
-				dragDropContainer.reparentTarget = grid.transform;
+				//dragDropContainer.reparentTarget = grid.transform;
 			}
 		}
 	}

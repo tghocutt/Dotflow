@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Dotflow
 {
@@ -8,11 +9,16 @@ namespace Dotflow
 
 		public DotflowElement[] hudElements = new DotflowElement[0];
 		public bool childrenMoving = false;
+		public UILabel gemLabel;
+
+		private List<GameObject> gos = new List<GameObject> ();
+
 		//public UILabel gemTotal;
 
 		public override void Open(DotflowElement[] elements)
 		{
 			base.Open (elements);
+			gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
 		}
 
 
