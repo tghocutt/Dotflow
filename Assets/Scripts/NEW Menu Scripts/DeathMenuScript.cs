@@ -7,13 +7,14 @@ namespace Dotflow
 
 		public DotflowElement[] DeathMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
-
+		public DotManager dotManager;
 		public UILabel score;
 
 		public override void Open(DotflowElement[] elements)
 		{
 			score.text = DotflowUIManager._dotManager.score.ToString ();
 			base.Open (elements);
+			dotManager.isGameInProgress = false;
 		}
 
 

@@ -7,6 +7,7 @@ namespace Dotflow
 
 		public DotflowElement[] mainMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
+		public DotManager dotManager;
 
 		//implemented from the base class
 		public override void Open(DotflowElement[] elements)
@@ -75,7 +76,14 @@ namespace Dotflow
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);
-				DotflowUIManager.boosterMenu.Open (DotflowUIManager.boosterMenu.boosterMenuElements);
+				if(dotManager.isGameInProgress)
+				{
+					DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
+					DotflowUIManager.isMenuActive = false;
+				} else {
+					DotflowUIManager.boosterMenu.Open (DotflowUIManager.boosterMenu.boosterMenuElements);
+				}
+
 			}
 		}
 

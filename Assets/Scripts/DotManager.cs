@@ -62,6 +62,7 @@ namespace Dotflow
 
 		[HideInInspector]
 		public bool lineBeingDrawn = false; /* boolean value that tells if the line is being currently drawn or not */
+		public bool isGameInProgress = false;
 
 		public Color lineColor = Color.white; /* the current color of the line, Color.white meaning no line/no color */
 

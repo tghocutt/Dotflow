@@ -90,6 +90,8 @@
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Scripts\Test\SpawnComplement.cs" />
      <Compile Include="Assets\Scripts\Test\TrackPicker.cs" />
+     <Compile Include="Assets\Shared\Elementals\Scripts\OrbitCamera.cs" />
+     <Compile Include="Assets\Shared\Elementals\Scripts\TestParticles.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -248,6 +250,7 @@
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Transparent Packed 1.shader" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 1.shader" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
+     <None Include="Assets\Shared\Elementals\!Readme.txt" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\Shared\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />

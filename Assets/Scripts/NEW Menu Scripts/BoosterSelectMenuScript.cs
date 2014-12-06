@@ -36,6 +36,7 @@ namespace Dotflow
 				go.GetComponent<BoosterItemBehavior>().selected = false;
 			}
 			lowerPanel.Reposition();
+			currentBoostersSelected = 0;
 		}
 
 
@@ -91,6 +92,12 @@ namespace Dotflow
 			}
 			lowerPanel.Reposition ();
 			upperPanel.Reposition();
+		}
+
+
+		private void Update()
+		{
+			upperPanel.Reposition ();
 		}
 
 		

@@ -5,6 +5,7 @@ namespace Dotflow
 {
 	public class DotflowMenu : MonoBehaviour {
 
+		public bool isGameInProgress = false;
 		//this is the base open function which tells elements to
 		//enter the screen. it must be implemented in all classes
 		//which inheret from DotflowMenu.

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,8 +10,9 @@ namespace Dotflow
 		public DotflowElement[] hudElements = new DotflowElement[0];
 		public bool childrenMoving = false;
 		public UILabel gemLabel;
+		public DotManager dotManager;
 
-		private List<GameObject> gos = new List<GameObject> ();
+
 
 		//public UILabel gemTotal;
 
@@ -19,6 +20,7 @@ namespace Dotflow
 		{
 			base.Open (elements);
 			gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
+			dotManager.isGameInProgress = true;
 		}
 
 
