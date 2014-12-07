@@ -17,14 +17,14 @@ namespace Dotflow
 		public Transform[] slotPositions = new Transform[0];
 
 		public Color[] possibleSlotColors = new Color[0];
-		public Color[] actualSlotColors = new Color[5];
+		public Color[] actualSlotColors = new Color[4];
 
 		public string[] possibleColorTags = new string[0];
-		public string[] actualColorTags = new string[5];
+		public string[] actualColorTags = new string[4];
 
-		public bool[] filled = new bool[5];
+		public bool[] filled = new bool[4];
 
-		public SpriteRenderer[] slotSprites = new SpriteRenderer[5];
+		public SpriteRenderer[] slotSprites = new SpriteRenderer[4];
 
 
 		public IEnumerator Grow()
