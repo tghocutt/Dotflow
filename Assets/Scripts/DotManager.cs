@@ -18,6 +18,7 @@ namespace Dotflow
 		public ObstacleManager obstacleManager;
 
 		public int score;
+		public int mostRecentScore;
 		private float scoreMultiplier = 1; /* for the score powerup */
 
 		public UILabel scoreLabel;
@@ -204,9 +205,11 @@ namespace Dotflow
 					complementManager.ComplementPlayer(complementManager.GenerateComplent(4), ds[ds.Count-1].transform.position);
 				}
 				/* end of praise code */
-
-				score += Mathf.RoundToInt(10f * (ds.Count*(ds.Count/2f)) * scoreMultiplier); //calculates the score for the line, bigger lines have slightly exponential curves
+				int s = Mathf.RoundToInt(10f * (ds.Count*(ds.Count/2f)) * scoreMultiplier);
+				score += s;//calculates the score for the line, bigger lines have slightly exponential curves
 				scoreLabel.text = score.ToString();
+
+				complementManager.SpecialMessage(s, ds[ds.Count - 1].transform.position, 0);//spawns the score reporter
 
 				explosionRenderer.DrawExplosions (ds, lineColor);
 				//loops through dots in line, destroys them, removes them from dotlist
@@ -492,10 +495,16 @@ namespace Dotflow
 			currentLevel--;
 			dotCurrentSpeed = dotSlowestSpeed;
 			spawnSize += dotShrinkAmount;
-			currentMaxDots -= 10;
+			if(currentMaxDots - 10 < 2)
+			{
+				currentMaxDots = 2;
+			} else {
+				currentMaxDots -= 10;
+			}
 
 			//TODO: LOWER LIFE GEM COUNT, CURRENTLY DOESN'T FOR TESTING PURPOSES
-			//PlayerPrefs.SetInt ("lifeGem", PlayerPrefs.GetInt ("lifeGem") - 1);
+			PlayerPrefs.SetInt ("gemTotal", PlayerPrefs.GetInt ("gemTotal") - 1);
+			gemLabel.text = PlayerPrefs.GetInt ("gemTotal").ToString ();
 			//TODO: Call 'life gem used' animation here?
 		}
 

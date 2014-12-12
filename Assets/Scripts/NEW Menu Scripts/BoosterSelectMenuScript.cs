@@ -10,14 +10,19 @@ namespace Dotflow
 		public bool childrenMoving = false;
 
 		public UIButton[] boosters = new UIButton[0];
+	
 		public UILabel gemLabel;
 		public int maxBoostersSelectable;
 		public int currentBoostersSelected;
+
+		public Transform[] upperslots = new Transform[0];
+		public UIScrollView lowerScrollView;
 
 		public UIGrid upperPanel;
 		public UIGrid lowerPanel;
 
 		private List<GameObject> gos = new List<GameObject> ();
+		private UIButton[] upperButtons = new UIButton[3];
 
 		//implemented from the base class
 		public override void Open(DotflowElement[] elements)
@@ -65,31 +70,28 @@ namespace Dotflow
 		private void ProcessBoosterSelect(GameObject go)
 		{
 			BoosterItemBehavior bib = go.GetComponent<BoosterItemBehavior> ();
-			if(bib.selected)
+
+			if(currentBoostersSelected < maxBoostersSelectable && PlayerPrefs.GetInt("gemTotal") >= bib.cost)
 			{
-				PlayerPrefs.SetInt ("gemTotal", PlayerPrefs.GetInt("gemTotal") + bib.cost);
-				gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
-				go.transform.parent = lowerPanel.transform;
-				currentBoostersSelected -= 1;
-				bib.selected = !bib.selected;
-				for(int i = 0; i < gos.Count; i++)
+				for(int i = 0; i < upperButtons.Length; i++)
 				{
-					if(gos[i] == go)
+					if(upperButtons[i] == null)
 					{
-						gos.RemoveAt(i);
+						GameObject guu = NGUITools.AddChild(upperslots[i].gameObject, bib.upperButtonPrefab);
+						upperButtons[i] =  guu.GetComponent<UIButton>();
+						upperButtons[i].GetComponent<UpperButtonBehavior>().boosterScript = this;
+						guu.transform.position = upperslots[i].transform.position;
+						break;
 					}
 				}
-			} else {
-				if(currentBoostersSelected < maxBoostersSelectable && PlayerPrefs.GetInt("gemTotal") >= bib.cost)
-				{
-					PlayerPrefs.SetInt ("gemTotal", PlayerPrefs.GetInt("gemTotal") - bib.cost);
-					gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
-					go.transform.parent = upperPanel.transform;
-					currentBoostersSelected += 1;
-					bib.selected = !bib.selected;
-					gos.Add(go);
-				}
+
+				PlayerPrefs.SetInt ("gemTotal", PlayerPrefs.GetInt("gemTotal") - bib.cost);
+				gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
+				currentBoostersSelected += 1;
+
+				gos.Add(go);
 			}
+
 			lowerPanel.Reposition ();
 			upperPanel.Reposition();
 		}

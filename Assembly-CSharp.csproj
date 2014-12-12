@@ -87,9 +87,11 @@
      <Compile Include="Assets\Scripts\Test\ObstacleManager.cs" />
      <Compile Include="Assets\Scripts\Test\ParticleRendererRotater.cs" />
      <Compile Include="Assets\Scripts\Test\PowerupManager.cs" />
+     <Compile Include="Assets\Scripts\Test\ScoreReporter.cs" />
      <Compile Include="Assets\Scripts\Test\SettingsKnobs.cs" />
      <Compile Include="Assets\Scripts\Test\SpawnComplement.cs" />
      <Compile Include="Assets\Scripts\Test\TrackPicker.cs" />
+     <Compile Include="Assets\Scripts\UpperButtonBehavior.cs" />
      <Compile Include="Assets\Shared\Elementals\Scripts\OrbitCamera.cs" />
      <Compile Include="Assets\Shared\Elementals\Scripts\TestParticles.cs" />
      <Compile Include="Assets\Shared\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />

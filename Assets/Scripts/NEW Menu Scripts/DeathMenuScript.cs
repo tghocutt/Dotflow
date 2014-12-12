@@ -9,12 +9,14 @@ namespace Dotflow
 		public bool childrenMoving = false;
 		public DotManager dotManager;
 		public UILabel score;
+		public UILabel gemLabel;
 
 		public override void Open(DotflowElement[] elements)
 		{
 			score.text = DotflowUIManager._dotManager.score.ToString ();
 			base.Open (elements);
 			dotManager.isGameInProgress = false;
+			gemLabel.text = PlayerPrefs.GetInt ("gemTotal").ToString ();
 		}
 
 
@@ -48,10 +50,11 @@ namespace Dotflow
 		private void UseLifeGem(GameObject go) {
 			if (!DotflowUIManager.isMenuMoving) 
 			{
-				if (PlayerPrefs.GetInt("lifeGem") > 0) {
+				if (PlayerPrefs.GetInt("gemTotal") > 0) {
 					DotflowUIManager._dotManager.LifeGemUsed();
 					Close (DeathMenuElements);
 					DotflowUIManager.HUD.Open (DotflowUIManager.HUD.hudElements);
+					DotflowUIManager.isMenuActive = false;
 				}else {
 					//TODO:Tell the player he has no more life gems?
 				}
@@ -73,6 +76,7 @@ namespace Dotflow
 		private void Start () {
 			UIEventListener.Get (DeathMenuElements[0].gameObject).onClick += Restart;
 			UIEventListener.Get (DeathMenuElements[1].gameObject).onClick += Quit;
+			UIEventListener.Get (DeathMenuElements[3].gameObject).onClick += UseLifeGem;
 		}
 	}
 }

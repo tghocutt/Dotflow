@@ -36,4 +36,8 @@ public class Complement : MonoBehaviour {
 	}
 	
 
+	private void FixedUpdate()
+	{
+		gameObject.transform.position = new Vector2 (transform.position.x, transform.position.y + (0.1f * Time.deltaTime));
+	}
 }

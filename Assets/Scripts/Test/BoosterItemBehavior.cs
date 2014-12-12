@@ -6,7 +6,7 @@ namespace Dotflow
 	public class BoosterItemBehavior : MonoBehaviour 
 	{
 		public UIGrid grid;
-
+		public GameObject upperButtonPrefab;
 		public UIDragDropContainer dragDropContainer;
 
 		public int cost;
