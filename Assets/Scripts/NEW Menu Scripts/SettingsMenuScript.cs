@@ -7,6 +7,7 @@ namespace Dotflow
 
 		public DotflowElement[] settingsMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
+		public AudioManager audioManager;
 
 		public UISlider masterSlider;
 
@@ -39,6 +40,7 @@ namespace Dotflow
 
 		private void GoBack(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) {
 				Close (settingsMenuElements);
 				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);

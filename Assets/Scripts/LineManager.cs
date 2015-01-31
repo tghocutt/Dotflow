@@ -12,11 +12,13 @@ namespace Dotflow {
 		private List<LineBoxCollider2D> listOfColliders;
 		public LineBoxCollider2D lineBoxColliderPrefab;
 		public GameObject mouseFollower;
+		public int lineSegments = 30;
+
 
 		void Start () {
 			listOfColliders = new List<LineBoxCollider2D>();
 		
-			for(int i = 0; i < 20; i++) { //placeholder code to start out with 15 colliders, should make it dynamic someday
+			for(int i = 0; i < lineSegments; i++) { //placeholder code to start out with 15 colliders, should make it dynamic someday
 				LineBoxCollider2D newBox = Instantiate(lineBoxColliderPrefab) as LineBoxCollider2D; //creates a new collider, disables it
 				newBox.transform.parent = this.transform; //sets the parent as the line manager
 				listOfColliders.Add(newBox); //and stores it in the list

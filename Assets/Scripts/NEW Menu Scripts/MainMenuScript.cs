@@ -8,6 +8,7 @@ namespace Dotflow
 		public DotflowElement[] mainMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
 		public DotManager dotManager;
+		public AudioManager audioManager;
 
 		//implemented from the base class
 		public override void Open(DotflowElement[] elements)
@@ -25,6 +26,8 @@ namespace Dotflow
 		//restarts a new game with new dots.
 		private void Back(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
+
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);
@@ -35,6 +38,7 @@ namespace Dotflow
 		//opens up the settings menu
 		private void Settings(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) {
 				Close (mainMenuElements);
 				DotflowUIManager.settingsMenu.Open (DotflowUIManager.settingsMenu.settingsMenuElements);
@@ -44,6 +48,7 @@ namespace Dotflow
 		//opens up the credits menu
 		private void Credits(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);
@@ -54,6 +59,7 @@ namespace Dotflow
 		//exits out of the application
 		private void Quit(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Application.Quit ();
@@ -64,6 +70,7 @@ namespace Dotflow
 		//TODO what do we want this to do?
 		private void Menu(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving)
 			{
 
@@ -73,6 +80,7 @@ namespace Dotflow
 		//resumes the current game
 		private void Play(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);
@@ -91,6 +99,7 @@ namespace Dotflow
 		//opens the store
 		private void Store(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (mainMenuElements);

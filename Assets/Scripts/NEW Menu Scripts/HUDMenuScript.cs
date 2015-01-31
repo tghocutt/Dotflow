@@ -11,6 +11,7 @@ namespace Dotflow
 		public bool childrenMoving = false;
 		public UILabel gemLabel;
 		public DotManager dotManager;
+		public AudioManager audioManager;
 
 
 
@@ -18,6 +19,7 @@ namespace Dotflow
 
 		public override void Open(DotflowElement[] elements)
 		{
+			audioManager.menuFX [0].Play ();
 			base.Open (elements);
 			gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
 			dotManager.isGameInProgress = true;
@@ -26,12 +28,14 @@ namespace Dotflow
 
 		public override void Close(DotflowElement[] elements)
 		{
+			audioManager.menuFX [0].Play ();
 			base.Close (elements);
 		}
 
 
 		private void Menu(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) {
 				DotflowUIManager.isMenuActive = true;
 				Close (hudElements);

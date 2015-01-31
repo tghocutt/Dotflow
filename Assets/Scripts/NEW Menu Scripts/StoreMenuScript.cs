@@ -7,6 +7,7 @@ namespace Dotflow
 
 		public DotflowElement[] storeMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
+		public AudioManager audioManager;
 		
 		//implemented from the base class
 		public override void Open(DotflowElement[] elements)
@@ -24,6 +25,7 @@ namespace Dotflow
 		//restarts a new game with new dots.
 		private void Back(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (storeMenuElements);

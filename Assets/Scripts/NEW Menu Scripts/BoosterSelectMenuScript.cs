@@ -8,6 +8,7 @@ namespace Dotflow
 
 		public DotflowElement[] boosterMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
+		public AudioManager audioManager;
 
 		public UIButton[] boosters = new UIButton[0];
 	
@@ -48,6 +49,7 @@ namespace Dotflow
 		//resumes the current game
 		private void Play(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				DotflowUIManager.isMenuActive = false;
@@ -58,6 +60,7 @@ namespace Dotflow
 
 		private void Back(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				//DotflowUIManager._dotManager.RestartGame();
@@ -69,6 +72,7 @@ namespace Dotflow
 
 		private void ProcessBoosterSelect(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			BoosterItemBehavior bib = go.GetComponent<BoosterItemBehavior> ();
 
 			if(currentBoostersSelected < maxBoostersSelectable && PlayerPrefs.GetInt("gemTotal") >= bib.cost)

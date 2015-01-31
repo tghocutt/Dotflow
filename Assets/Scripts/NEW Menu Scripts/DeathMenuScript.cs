@@ -10,6 +10,7 @@ namespace Dotflow
 		public DotManager dotManager;
 		public UILabel score;
 		public UILabel gemLabel;
+		public AudioManager audioManager;
 
 		public override void Open(DotflowElement[] elements)
 		{
@@ -28,6 +29,7 @@ namespace Dotflow
 
 		private void Quit(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				DotflowUIManager._dotManager.RestartGame();
@@ -39,6 +41,7 @@ namespace Dotflow
 
 		private void Restart(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) 
 			{
 				Close (DeathMenuElements);
@@ -50,6 +53,7 @@ namespace Dotflow
 		private void UseLifeGem(GameObject go) {
 			if (!DotflowUIManager.isMenuMoving) 
 			{
+				audioManager.menuFX [0].Play ();
 				if (PlayerPrefs.GetInt("gemTotal") > 0) {
 					DotflowUIManager._dotManager.LifeGemUsed();
 					Close (DeathMenuElements);

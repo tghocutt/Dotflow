@@ -7,6 +7,7 @@ namespace Dotflow
 
 		public DotflowElement[] creditsMenuElements = new DotflowElement[0];
 		public bool childrenMoving = false;
+		public AudioManager audioManager;
 
 		public override void Open(DotflowElement[] elements)
 		{
@@ -22,6 +23,7 @@ namespace Dotflow
 
 		private void GoBack(GameObject go)
 		{
+			audioManager.menuFX [0].Play ();
 			if (!DotflowUIManager.isMenuMoving) {
 				Close (creditsMenuElements);
 				DotflowUIManager.mainMenu.Open (DotflowUIManager.mainMenu.mainMenuElements);
