@@ -6,7 +6,7 @@ namespace Dotflow
 {
 	public class PowerupController : MonoBehaviour {
 
-		public enum Powerups : byte {ScoreMultiplier=1, ExtraLife, TimeSlow, TimeFreeze};
+		public enum Powerups : byte {ScoreMultiplier=1, ExtraLife, TimeSlow, TimeFreeze, LifeGem};
 		public Powerups typeofPowerup;
 		public float powerupChanceWeight; /* from 0 to 1, what's the % chance that this powerup shows up instead any other */
 
@@ -35,6 +35,10 @@ namespace Dotflow
 					PowerTimeFreeze();
 					break;
 
+				case Powerups.LifeGem:
+					PowerLifeGem();
+					break;
+
 				default:
 					Debug.Log("Power up #" + this.GetInstanceID().ToString() + " has no power here.");
 					break;
@@ -45,6 +49,7 @@ namespace Dotflow
 		private void Start()
 		{
 			dot = gameObject.GetComponent<Dot> () as Dot;
+			powerupManager = dot.dotManager.powerupManager;
 		}
 
 		void PowerScoreMultiplier() {
@@ -56,7 +61,7 @@ namespace Dotflow
 			int lifeTotal = dot.dotManager.livesClass.currentLives;
 			if(lifeTotal < dot.dotManager.livesClass.maxLives)
 			{
-				dot.dotManager.livesClass.SetLifeTotal(lifeTotal + 1);
+				dot.dotManager.livesClass.AddLife();
 			}
 		}
 
@@ -83,7 +88,13 @@ namespace Dotflow
 //				powerupManager.SlowTimeGo (0.01f);
 //			}
 		}
-	
+
+		void PowerLifeGem()
+		{
+			PlayerPrefs.SetInt("gemTotal", PlayerPrefs.GetInt("gemTotal") + 1);
+			Debug.Log (PlayerPrefs.GetInt ("gemTotal"));
+			powerupManager.dotManager.gemLabel.text = PlayerPrefs.GetInt("gemTotal").ToString();
+		}
 
 		void OnDestroy() 
 		{
